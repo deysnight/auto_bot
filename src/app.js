@@ -3,6 +3,7 @@ import express from 'express'
 
 import expressConfig from './config/express'
 import Browser from './browser'
+import Scheduler from './scheduler'
 
 async function App() {
     const expressApp_base = express()
@@ -12,10 +13,11 @@ async function App() {
 
         const expressApp = expressConfig(expressApp_base)
 
-        expressApp.locals.browser = Browser
-        await expressApp.locals.browser.init()
+        await Browser.init()
+        const scheduler = new Scheduler(Browser)
+        expressApp.locals.scheduler = scheduler
 
-        await expressApp.locals.browser.test()
+        //await Browser.test() //test
 
         expressApp.listen(process.env.port, () =>
             console.log(
