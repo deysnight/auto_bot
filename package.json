@@ -5,7 +5,9 @@
   "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node src/app.js"
+    "start": "nodemon --exec babel-node src/app.js",
+    "build": "babel src --out-dir dist",
+    "start_alone": "npm run build && node dist/app.js"
   },
   "repository": {
     "type": "git",
@@ -19,9 +21,10 @@
   },
   "homepage": "https://github.com/deysnight/auto_bot#readme",
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/node": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
+    "@babel/cli": "^7.12.13",
+    "@babel/core": "^7.12.13",
+    "@babel/node": "^7.12.13",
+    "@babel/preset-env": "^7.12.13",
     "eslint": "^7.18.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^7.2.0",
@@ -30,9 +33,20 @@
     "prettier": "^2.2.1"
   },
   "dependencies": {
+    "babel-eslint": "^10.1.0",
     "dotenv": "^8.2.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
     "express": "^4.17.1",
     "opencv4nodejs": "^5.6.0",
-    "puppeteer": "^5.5.0"
+    "puppeteer": "^5.5.0",
+    "puppeteer-extra": "^3.1.16",
+    "puppeteer-extra-plugin-stealth": "^2.7.4"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "runtime_data.json",
+      "runtime_config.json"
+    ]
   }
 }

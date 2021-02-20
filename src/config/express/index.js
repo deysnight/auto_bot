@@ -6,6 +6,8 @@ export default function (expressApp) {
     expressApp.use(express.json())
     expressApp.use(express.urlencoded())
 
+    expressApp.use(express.static('static'));
+
     expressApp.use('*', (req, res, next) => {
         /*res.header(
             'Access-Control-Allow-Methods',

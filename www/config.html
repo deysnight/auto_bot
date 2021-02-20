@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Autobot</title>
+    <link type="text/css" href="css/theme.css" rel="stylesheet">
+    <link type="text/css" href="css/base.css" rel="stylesheet">
+	<link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link type="text/css" href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+	<link type="text/css" href="images/icons/css/font-awesome.css" rel="stylesheet">
+	<link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600' rel='stylesheet'>
+    
+
+
+    
+</head>
+<body>
+
+	<div class="wrapper">
+		<div class="container">
+			<div class="row">
+				<div class="span3">
+					<div class="sidebar">
+
+						<ul class="widget widget-menu unstyled">
+							<li>
+								<a href="/">
+									<i class="menu-icon icon-dashboard"></i>
+									Dashboard
+								</a>
+							</li>
+							<li class="active">
+								<a href="/config">
+									<i class="menu-icon icon-tasks"></i>
+									Configuration
+								</a>
+							</li>
+						</ul><!--/.widget-nav-->
+
+					</div><!--/.sidebar-->
+				</div><!--/.span3-->
+
+
+				<div class="span9">
+					<div class="content">
+
+						<div class="module">
+							<div class="module-head" id="main_header_bar">
+								<h3 id="main_titre">Configuration</h3>
+							</div>
+							<div class="module-body">
+								
+								<!-- <hr /> -->
+                                <form class="form-horizontal row-fluid" onsubmit="validateForm()">
+
+                                    <p style="margin-top: 5px;">
+                                        <strong>Global</strong>
+                                    </p>
+                                    <div class="group-control">
+                                        <div class="control-group">
+                                            <label class="control-label" for="ff_enabled">Enable FreeFaucet</label>
+                                            <div class="controls">
+                                                <label class="switch">
+                                                    <input type="checkbox" id="ff_enabled">
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label" for="fc_enabled">Enable FaucetCrypto</label>
+                                            <div class="controls">
+                                                <label class="switch">
+                                                    <input type="checkbox" id="fc_enabled">
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label" for="p0_enabled">Enable Publish0x</label>
+                                            <div class="controls">
+                                                <label class="switch">
+                                                    <input type="checkbox" id="p0_enabled">
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    
+
+                                    <p style="margin-top: 5px;">
+                                        <strong>FreeFaucet</strong>
+                                    </p>
+                                    <div class="group-control">
+                                        <div class="control-group">
+                                            <label class="control-label" for="ff_login">Login</label>
+                                            <div class="controls">
+                                                <input type="text" id="ff_login" placeholder="" class="span8">
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label" for="ff_password">Password</label>
+                                            <div class="controls">
+                                                <input type="password" id="ff_password" placeholder="" class="span8">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <p style="margin-top: 5px;">
+                                        <strong>FaucetCrypto</strong>
+                                    </p>
+                                    <div class="group-control">
+                                        <div class="control-group">
+                                            <label class="control-label" for="fc_login">Login</label>
+                                            <div class="controls">
+                                                <input type="text" id="fc_login" placeholder="" class="span8">
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label" for="fc_password">Password</label>
+                                            <div class="controls">
+                                                <input type="password" id="fc_password" placeholder="" class="span8">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <p style="margin-top: 5px;">
+                                        <strong>Publish0x</strong>
+                                    </p>
+                                    <div class="group-control">
+                                        <div class="control-group">
+                                            <label class="control-label" for="p0_login">Login</label>
+                                            <div class="controls">
+                                                <input type="text" id="p0_login" placeholder="" class="span8">
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label" for="p0_password">Password</label>
+                                            <div class="controls">
+                                                <input type="password" id="p0_password" placeholder="" class="span8">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="submit_div">
+                                        <input type="submit" class="submit_button btn btn-large btn-primary"></input>
+                                    </div>
+                                    
+
+
+                                </form>
+
+					</div><!--/.content-->
+				</div><!--/.span9-->
+			</div>
+		</div><!--/.container-->
+	</div><!--/.wrapper-->
+
+	<div class="footer">
+		<div class="container">
+			 
+
+			<b class="copyright">&copy; 2021 Autobot </b> All rights reserved.
+		</div>
+	</div>
+
+	<script src="scripts/jquery-1.9.1.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script>
+		$(document).ready(function() {
+            $.get("/cfg", function( data ) {
+                var config = JSON.parse(atob(data.config))
+
+                if (config.freefaucet.enabled) { $("#ff_enabled").attr("checked", "checked"); }
+                if (config.faucetcrypto.enabled) { $("#fc_enabled").attr("checked", "checked"); }
+                if (config.publish0x.enabled) { $("#p0_enabled").attr("checked", "checked"); }
+
+                $("#ff_login").val(config.freefaucet.login)
+                $("#ff_password").val(config.freefaucet.password)
+                $("#fc_login").val(config.faucetcrypto.login)
+                $("#fc_password").val(config.faucetcrypto.password)
+                $("#p0_login").val(config.publish0x.login)
+                $("#p0_password").val(config.publish0x.password)
+            });
+		} );
+
+
+        function validateForm() {
+
+            data = {
+                freefaucet: {
+                    enabled: $("#ff_enabled").prop('checked'),
+                    login: $("#ff_login").val(),
+                    password: $("#ff_password").val()
+                },
+                faucetcrypto: {
+                    enabled: $("#fc_enabled").prop('checked'),
+                    login: $("#fc_login").val(),
+                    password: $("#fc_password").val()
+                },
+                publish0x: {
+                    enabled: $("#p0_enabled").prop('checked'),
+                    login: $("#p0_login").val(),
+                    password: $("#p0_password").val()
+                }
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/cfg",
+                data: {data: btoa(JSON.stringify(data))},
+                success: null,
+                dataType: "json"
+            });
+        }
+	</script>
+</body>

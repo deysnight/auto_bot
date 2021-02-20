@@ -15,6 +15,8 @@ async function App() {
 
         await Browser.init()
         const scheduler = new Scheduler(Browser)
+        //scheduler.runtime = true
+        scheduler.startup()
         expressApp.locals.scheduler = scheduler
 
         //await Browser.test() //test
