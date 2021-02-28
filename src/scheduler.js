@@ -1,5 +1,5 @@
 //import sleep from './utils/sleep'
-import { sleep, toFixedNumber } from './utils/utils'
+import { sleep, toFixedNumber, randomInt } from './utils/utils'
 import Storage from './utils/storage'
 import url from "url"
 import fs from "fs"
@@ -106,6 +106,15 @@ export default class Scheduler {
         if (pathname.indexOf("free") === -1) {
             //need to loggin
 
+            //try to close tuto window a start
+            try {
+                await this.browser.page.click('.d-none.d-lg-block > div:nth-child(1)');
+                await sleep(1000)
+            } catch (error) {
+                //PASS
+            }
+
+
             //mail
             await this.browser.page.type('.form-control.email', this.config.freefaucet.login);
             //password
@@ -168,7 +177,31 @@ export default class Scheduler {
             await this.browser.page.waitForNavigation();
             await sleep(3000)
 
+            //try to close tuto window a start
+            try {
+                await this.browser.page.click('.inline-flex.rounded-md.shadow-sm:nth-child(1) > button');
+                await sleep(3000)
+            } catch (error) {
+                //PASS
+            }
+
+            //try to close chat window
+            try {
+                await this.browser.page.click('.chatbro_header_button.chatbro_minimize_button');
+                await sleep(3000)
+            } catch (error) {
+                //PASS
+            }
         }
+
+
+        //get current balance
+        let current_balance = await this.browser.page.$eval('.flex.badge.text-bg-yellow.py-1.transition.duration-150.ease-in-out', (divs) => {
+            return parseFloat(divs.innerText.split(' ')[0]);
+        });
+        this.data.faucetcrypto.currentbalance = current_balance
+        await sleep(500)
+
 
         //check if ptc available
         const available_ptc = await this.browser.page.$eval('.px-2.py-4.space-y-1.w-full.relative', (divs) => {
@@ -176,14 +209,103 @@ export default class Scheduler {
         });
         await sleep(1000)
 
+        //START PTC
         if (available_ptc == true) {
             //goto ptc page
             await this.browser.page.click('.px-2.py-4.space-y-1.w-full.relative > div:nth-child(2) > a:nth-child(3)');
             await sleep(5000)
-            
+
+            const nb_ptc_available = await this.browser.page.$eval('.grid.grid-responsive-3', (divs) => {
+                return parseFloat(divs.children.length);
+            });
+
+
+            let nb_ptc_remaining = nb_ptc_available;
+            do {
+                //get ptc timer
+                let timer_for_ptc = await this.browser.page.$eval('.grid.grid-responsive-3 > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1)', (divs) => {
+                    return parseFloat(divs.innerText.split(' ')[0]);
+                });
+
+                //get ptc reward
+                let ptc_reward = await this.browser.page.$eval('.grid.grid-responsive-3 > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)', (divs) => {
+                    return parseFloat(divs.innerText.split(' ')[0]);
+                });
+
+                //click on ptc
+                await this.browser.page.click('.grid.grid-responsive-3 > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > span > a');
+                await this.browser.page.waitForNavigation();
+                await sleep(5000)
+
+                //ptc interpage
+                console.log("1")
+                await this.browser.page.waitForFunction("document.querySelector('.flex.justify-center.my-6 > div:nth-child(1) > span:nth-child(1) > button:nth-child(2)').classList.contains('cursor-not-allowed') == false")
+                console.log("2")
+                await sleep(randomInt(2,7) * 1000)
+                await this.browser.page.click('.flex.justify-center.my-6 > div:nth-child(1) > span:nth-child(1) > button:nth-child(2)');
+                console.log("3")
+                //'.flex.justify-center.my-6 > span:nth-child(2) > button'
+
+                //wait for timer
+                await sleep((randomInt(3, 10) + timer_for_ptc) * 1000)
+
+                //click on continue
+                await this.browser.page.click('.notranslate.inline-flex.rounded-md.shadow-sm > a');
+                await this.browser.page.waitForNavigation();
+                await sleep(5000)
+
+                const list_page = await this.browser.browser.pages()
+                const current_page = list_page[list_page.length - 1]
+                const current_url = current_page.url()
+                if (new URL(current_url).host != 'faucetcrypto.com') {
+                    await current_page.goto('about:blank')
+                    await sleep(5000)
+                    await current_page.close();
+                }
+                await sleep(5000)
+
+                //get new balance
+                const new_current_balance = await this.browser.page.$eval('.flex.badge.text-bg-yellow.py-1.transition.duration-150.ease-in-out', (divs) => {
+                    return parseFloat(divs.innerText.split(' ')[0]);
+                });
+                const old_nb_ptc_remaining = nb_ptc_remaining
+
+
+                nb_ptc_remaining = await this.browser.page.$eval('.grid.grid-responsive-3', (divs) => {
+                    return parseFloat(divs.children.length);
+                });
+
+                // if ptc succed
+                console.log("old_nb_ptc_remaining", old_nb_ptc_remaining)
+                console.log("nb_ptc_remaining", nb_ptc_remaining)
+                if (old_nb_ptc_remaining != nb_ptc_remaining) {
+                    this.data.faucetcrypto.currentbalance = new_current_balance
+                    this.data.faucetcrypto.ptc.claimcount += 1
+                    this.data.faucetcrypto.ptc.totalearn += ptc_reward
+                    if (!(nb_ptc_remaining > 0)) {
+                        this.data.faucetcrypto.ptc.lastDone = Date.now()
+                        this.storage.fc_update_last("ptc")
+                    }
+                    this.save_state()
+                }
+                
+            } while (nb_ptc_remaining > 0)
         }
+        //END PTC
+
+        //check if shortline available
+        const available_shortlink = await this.browser.page.$eval('.px-2.py-4.space-y-1.w-full.relative > div:nth-child(2) > a:nth-child(4) > span:nth-child(2)', (divs) => {
+            return (divs.innerText > 2 ? true : false);
+        });
+        await sleep(1000)
+
+        //START PTC
+        if (available_shortlink == true) {
+            console.log("shortlink")
+        }
+
         
-       this.runtime = false
+        this.runtime = false
     }
 
 }

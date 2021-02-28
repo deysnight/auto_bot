@@ -29,6 +29,7 @@ module.exports = {
         eqeqeq: 'off',
         'no-restricted-syntax': 'off',
         'guard-for-in': 'off',
+        'max-len': 'off',
         'max-line-length': [true, 0],
     },
 }

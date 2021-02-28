@@ -41,7 +41,10 @@ export default class Storage {
                 neo: { claimcount: 0, balance: 0.0, lastclaim: 0.0, lastDone: 0 },
             },
             faucetcrypto: {
-                ptccount: 0, shortlinkcount: 0, balance: 0.0, lastDone: 0
+                currentbalance : 0.0,
+                ptc: { claimcount: 0, totalearn: 0.0, lastDone: 0 },
+                shortlink: { claimcount: 0, totalearn: 0.0, lastDone: 0 },
+                faucet: { claimcount: 0, totalearn: 0.0, lastDone: 0 },
             },
 
         }
@@ -84,7 +87,9 @@ export default class Storage {
         // fc = faucetcrypto
         this.fc_data = {
             url: 'https://faucetcrypto.com/dashboard',
-            lastDone: 0,
+            ptc: { lastDone: 0 },
+            shortlink: { lastDone: 0 },
+            faucet: { lastDone: 0 },
         }
 
     }
@@ -106,11 +111,25 @@ export default class Storage {
 
     fc_checkTimeout = (timeout) => {
         const now = Date.now()
-        const last = this.fc_data.lastDone
+        Math.min(2, 3, 1)
+        const last = Math.min(this.fc_data.ptc.lastDone, this.fc_data.shortlink.lastDone, this.fc_data.faucet.lastDone)
         if (now - last > timeout * 1000) {
             return true
         }
         return false
+    }
+
+    fc_update_last = (side) => {
+        if (side === "ptc") {
+            this.fc_data.ptc.lastDone = Date.now()
+        }
+        if (side === "shortlink") {
+            this.fc_data.shortlink.lastDone = Date.now()
+        }
+        if (side === "faucet") {
+            this.fc_data.faucet.lastDone = Date.now()
+        }
+        
     }
 
 

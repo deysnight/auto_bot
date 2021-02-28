@@ -7,4 +7,10 @@ function toFixedNumber(nb, digits, base=10) {
     return Math.round(nb*pow) / pow;
 }
 
-export {sleep, toFixedNumber};
+//[binf, bsup[
+function randomInt(binf, bsup)
+{
+    return (Math.floor(Math.random() * Math.floor(bsup + binf))) + binf
+}
+
+export {sleep, toFixedNumber, randomInt};

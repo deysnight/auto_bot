@@ -1,24 +1,26 @@
-import puppeteer from 'puppeteer'
+import puppeteer from 'puppeteer-extra'
+import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 import cv from 'opencv4nodejs'
 
 class Browser {
     async init() {
-        //this.browser = await puppeteer.launch({ headless: false })
+        puppeteer.use(StealthPlugin())
         this.browser = await puppeteer.launch({
             defaultViewport: {
                 width: 1280,
                 height: 720,
                 deviceScaleFactor: 1,
             },
+            args: ['--no-sandbox'],
             headless: false
         })
 
         this.page = await (await this.browser.pages())[0]
 
-        this.browser.on("targetcreated", async (target)=>{
+        /*this.browser.on("targetcreated", async (target)=>{
             const page=await target.page();
             if(page) page.close();
-         });
+         });*/
 
          
         //this.page = await this.browser.newPage()
