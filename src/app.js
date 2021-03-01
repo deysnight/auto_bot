@@ -21,7 +21,7 @@ async function App() {
 
         //await Browser.test() //test
 
-        expressApp.listen(process.env.port, () =>
+        expressApp.listen(process.env.PORT, () =>
             console.log(
                 `[Server] ${process.env.APP_NAME} listening on ${process.env.PORT} in ${process.env.MODE} mode`
             )
