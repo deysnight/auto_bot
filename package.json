@@ -6,9 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start_babel": "nodemon --exec babel-node src/app.js",
-    "install_puppeteer": "npm install puppeteer",
     "build": "babel src --out-dir dist",
-    "start": "npm run install_puppeteer && npm run build && node dist/app.js"
+    "start": "npm run build && node dist/app.js"
   },
   "repository": {
     "type": "git",
