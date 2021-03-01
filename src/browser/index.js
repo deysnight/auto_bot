@@ -1,6 +1,6 @@
 import puppeteer from 'puppeteer-extra'
 import StealthPlugin from 'puppeteer-extra-plugin-stealth'
-import cv from 'opencv4nodejs'
+//import cv from 'opencv4nodejs'
 
 class Browser {
     async init() {
