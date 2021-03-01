@@ -12,7 +12,7 @@ class Browser {
                 deviceScaleFactor: 1,
             },
             args: ['--no-sandbox'],
-            headless: false
+            headless: true
         })
 
         this.page = await (await this.browser.pages())[0]
@@ -62,7 +62,7 @@ class Browser {
         await this.page.goto('https://www.google.com/')
     }
 
-    async test() {
+    /*async test() {
         await this.page.goto('https://faucetcrypto.com/dashboard')
         //await this.page.screenshot({ path: 'test.png' })
 
@@ -80,7 +80,7 @@ class Browser {
         cv.imshow('a img1 name', img1)
         cv.imshow('a img2 name', img2)
         cv.waitKey()
-    }
+    }*/
 }
 
 export default new Browser()
