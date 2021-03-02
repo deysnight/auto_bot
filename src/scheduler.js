@@ -98,7 +98,7 @@ export default class Scheduler {
     free_faucet_loop = async (currency) => {
         
         //goto URL
-        await this.browser.page.goto(this.storage.ff_data[currency].url)
+        await this.browser.page.goto(this.storage.ff_data[currency].url, { waitUntil: 'load', timeout: 0 })
         await sleep(2000)
 
         //check if logged
