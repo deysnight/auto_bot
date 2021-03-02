@@ -1,5 +1,6 @@
 import 'dotenv/config'
 import express from 'express'
+import npid from "npid"
 
 import expressConfig from './config/express'
 import Browser from './browser'
@@ -10,6 +11,14 @@ async function App() {
 
     try {
         console.log(`[${process.env.APP_NAME}] is starting`)
+        
+        try {
+            var pid = npid.create(process.env.PIDFILE);
+            pid.removeOnExit();
+        } catch (err) {
+            console.log(err);
+            process.exit(1);
+        }
 
         const expressApp = expressConfig(expressApp_base)
 

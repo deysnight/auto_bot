@@ -33,15 +33,16 @@
     "prettier": "^2.2.1"
   },
   "dependencies": {
+    "@babel/cli": "^7.12.13",
+    "@babel/core": "^7.12.13",
+    "@babel/node": "^7.12.13",
+    "@babel/preset-env": "^7.12.13",
     "babel-eslint": "^10.1.0",
     "dotenv": "^8.2.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "express": "^4.17.1",
-    "@babel/cli": "^7.12.13",
-    "@babel/core": "^7.12.13",
-    "@babel/node": "^7.12.13",
-    "@babel/preset-env": "^7.12.13",
+    "npid": "^0.4.0",
     "puppeteer": "^5.5.0",
     "puppeteer-extra": "^3.1.17",
     "puppeteer-extra-plugin-stealth": "^2.7.5"

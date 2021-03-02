@@ -1,21 +1,15 @@
 "use strict";
 
-require("core-js/modules/es.array.concat.js");
-
-require("core-js/modules/es.object.to-string.js");
-
-require("core-js/modules/es.promise.js");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
 
-require("regenerator-runtime/runtime.js");
-
 require("dotenv/config");
 
 var _express = _interopRequireDefault(require("express"));
+
+var _npid = _interopRequireDefault(require("npid"));
 
 var _express2 = _interopRequireDefault(require("./config/express"));
 
@@ -34,43 +28,33 @@ function App() {
 }
 
 function _App() {
-  _App = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-    var expressApp_base, expressApp, scheduler;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            expressApp_base = (0, _express.default)();
-            _context.prev = 1;
-            console.log("[".concat(process.env.APP_NAME, "] is starting"));
-            expressApp = (0, _express2.default)(expressApp_base);
-            _context.next = 6;
-            return _browser.default.init();
+  _App = _asyncToGenerator(function* () {
+    var expressApp_base = (0, _express.default)();
 
-          case 6:
-            scheduler = new _scheduler.default(_browser.default);
-            scheduler.runtime = true;
-            scheduler.startup();
-            expressApp.locals.scheduler = scheduler; //await Browser.test() //test
+    try {
+      console.log("[".concat(process.env.APP_NAME, "] is starting"));
 
-            expressApp.listen(process.env.port, function () {
-              return console.log("[Server] ".concat(process.env.APP_NAME, " listening on ").concat(process.env.PORT, " in ").concat(process.env.MODE, " mode"));
-            });
-            _context.next = 16;
-            break;
+      try {
+        var pid = _npid.default.create(process.env.PIDFILE);
 
-          case 13:
-            _context.prev = 13;
-            _context.t0 = _context["catch"](1);
-            console.log(_context.t0);
-
-          case 16:
-          case "end":
-            return _context.stop();
-        }
+        pid.removeOnExit();
+      } catch (err) {
+        console.log(err);
+        process.exit(1);
       }
-    }, _callee, null, [[1, 13]]);
-  }));
+
+      var expressApp = (0, _express2.default)(expressApp_base);
+      yield _browser.default.init();
+      var scheduler = new _scheduler.default(_browser.default); //scheduler.runtime = true
+
+      scheduler.startup();
+      expressApp.locals.scheduler = scheduler; //await Browser.test() //test
+
+      expressApp.listen(process.env.PORT, () => console.log("[Server] ".concat(process.env.APP_NAME, " listening on ").concat(process.env.PORT, " in ").concat(process.env.MODE, " mode")));
+    } catch (e) {
+      console.log(e);
+    }
+  });
   return _App.apply(this, arguments);
 }
 

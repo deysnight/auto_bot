@@ -14,7 +14,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _default(expressApp) {
   expressApp.use(_express.default.json());
   expressApp.use(_express.default.urlencoded());
-  expressApp.use('*', function (req, res, next) {
+  expressApp.use(_express.default.static('static'));
+  expressApp.use('*', (req, res, next) => {
     /*res.header(
         'Access-Control-Allow-Methods',
         'PUT, GET, POST, DELETE, OPTIONS, PATCH'

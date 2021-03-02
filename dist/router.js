@@ -1,45 +1,94 @@
 "use strict";
 
-require("core-js/modules/es.object.to-string.js");
-
-require("core-js/modules/es.promise.js");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = initRouter;
 
-require("regenerator-runtime/runtime.js");
-
 var _express = require("express");
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+var _path = _interopRequireDefault(require("path"));
 
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function initRouter() {
   var router = (0, _express.Router)();
-  router.get('/', /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
-      return regeneratorRuntime.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              return _context.abrupt("return", res.status(200).json({
-                success: true
-              }));
-
-            case 1:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-
-    return function (_x, _x2) {
-      return _ref.apply(this, arguments);
-    };
-  }());
+  var static_path = "/www";
+  router.get('/', (req, res) => {
+    res.sendFile(_path.default.join(process.cwd() + static_path + '/dashboard.html'));
+  });
+  router.get('/config', (req, res) => {
+    res.sendFile(_path.default.join(process.cwd() + static_path + '/config.html'));
+  });
+  router.get('/data', (req, res) => {
+    try {
+      var cur_list = req.app.locals.scheduler.storage.ff_currencies;
+      var cur_data = req.app.locals.scheduler.data;
+      return res.status(200).json({
+        success: true,
+        list: cur_list,
+        data: cur_data
+      });
+    } catch (e) {
+      return res.status(500).json({
+        success: false,
+        msg: e.message
+      });
+    }
+  });
+  router.get('/cfg', (req, res) => {
+    try {
+      var cur_cfg = req.app.locals.scheduler.config;
+      return res.status(200).json({
+        success: true,
+        config: Buffer.from(JSON.stringify(cur_cfg)).toString('base64')
+      });
+    } catch (e) {
+      return res.status(500).json({
+        success: false,
+        msg: e.message
+      });
+    }
+  });
+  router.post('/cfg', (req, res) => {
+    try {
+      var new_config = JSON.parse(Buffer.from(req.body.data, 'base64').toString('ascii'));
+      req.app.locals.scheduler.update_config(new_config);
+      return res.status(200).json({
+        success: true
+      });
+    } catch (e) {
+      return res.status(500).json({
+        success: false,
+        msg: e.message
+      });
+    }
+  });
+  router.get('/start', (req, res) => {
+    try {
+      return res.status(200).json({
+        success: true,
+        state: req.app.locals.scheduler.runtime
+      });
+    } catch (e) {
+      return res.status(500).json({
+        success: false,
+        msg: e.message
+      });
+    }
+  });
+  router.post('/start', (req, res) => {
+    try {
+      req.app.locals.scheduler.switch_state(req.body.state);
+      return res.status(200).json({
+        success: true
+      });
+    } catch (e) {
+      return res.status(500).json({
+        success: false,
+        msg: e.message
+      });
+    }
+  });
   return router;
 }
