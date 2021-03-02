@@ -124,6 +124,9 @@ export default class Scheduler {
             //click on log in
             console.log("before login")
             await this.browser.page.click('.main-button.main-button-yellow.login.bg-3');
+            
+            await this.browser.page.screenshot({ path: './www/test.png' })
+            
             await this.browser.page.waitForNavigation();
             await sleep(3000)
             console.log("after login")
