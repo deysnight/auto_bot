@@ -124,12 +124,11 @@ export default class Scheduler {
             //click on log in
             console.log("before login")
             await this.browser.page.click('.main-button.main-button-yellow.login.bg-3');
-            await this.browser.page.click('.main-button.main-button-yellow.login.bg-3');
             
             await this.browser.page.screenshot({ path: './static/test.png' })
             
-            await this.browser.page.waitForNavigation({ waitUntil: 'load', timeout: 0 });
-            await sleep(3000)
+            //await this.browser.page.waitForNavigation({ waitUntil: 'load', timeout: 0 });
+            await sleep(10000)
             console.log("after login")
             
             const list_page = await this.browser.browser.pages()
