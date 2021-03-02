@@ -101,7 +101,6 @@ export default class Scheduler {
         await this.browser.page.goto(this.storage.ff_data[currency].url)
         await sleep(2000)
         
-        console.log("onPage")
 
         //check if logged
         const pathname =  new url.URL(this.browser.page.url()).pathname;
@@ -122,14 +121,10 @@ export default class Scheduler {
             //password
             await this.browser.page.type('.form-control.password', this.config.freefaucet.password);
             //click on log in
-            console.log("before login")
             await this.browser.page.click('.main-button.main-button-yellow.login.bg-3');
             
-            await this.browser.page.screenshot({ path: './static/test.png' })
-            
-            //await this.browser.page.waitForNavigation({ waitUntil: 'load', timeout: 0 });
-            await sleep(10000)
-            console.log("after login")
+            await this.browser.page.waitForNavigation({ waitUntil: 'load', timeout: 0 });
+            await sleep(3000)
             
             const list_page = await this.browser.browser.pages()
             const current_page = list_page[list_page.length - 1]
@@ -142,8 +137,6 @@ export default class Scheduler {
             await sleep(5000)
             
         }
-
-        console.log("logged")
         
         //check balance
         const balance = await this.browser.page.$eval('.navbar-coins.bg-1', (divs) => {
