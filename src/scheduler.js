@@ -123,6 +123,17 @@ export default class Scheduler {
             await this.browser.page.click('.main-button.main-button-yellow.login.bg-3');
             await this.browser.page.waitForNavigation();
             await sleep(3000)
+            
+            const list_page = await this.browser.browser.pages()
+            const current_page = list_page[list_page.length - 1]
+            const current_url = current_page.url()
+            if (new URL(current_url).host != new URL(this.storage.ff_data[currency].url).host) {
+                await current_page.goto('about:blank')
+                await sleep(8000)
+                await current_page.close();
+            }
+            await sleep(5000)
+            
         }
 
         //check balance
