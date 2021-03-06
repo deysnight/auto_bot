@@ -12,7 +12,7 @@ class Browser {
                 deviceScaleFactor: 1,
             },
             args: ['--no-sandbox'],
-            headless: true
+            headless: false
         })
 
         this.page = await (await this.browser.pages())[0]

@@ -190,11 +190,11 @@
 
 				var fc_table_string = ""
 				//table part for ptc
-				fc_table_string += `<tr><td>PTC</td><td>${fc_data.ptc.claimcount}</td><td>${fc_data.ptc.claimcount.toFixed(8)}</td><td>${ (fc_data.ptc.lastDone == 0 ? "never" : moment(parseInt(fc_data.ptc.lastDone)).fromNow())}</td></tr>`
+				fc_table_string += `<tr><td>PTC</td><td>${fc_data.ptc.claimcount}</td><td>${fc_data.ptc.totalearn.toFixed(2)}</td><td>${ (fc_data.ptc.lastDone == 0 ? "never" : moment(parseInt(fc_data.ptc.lastDone)).fromNow())}</td></tr>`
 				//table part for shortlink
-				fc_table_string += `<tr><td>Shortlink</td><td>${fc_data.shortlink.claimcount}</td><td>${fc_data.shortlink.claimcount.toFixed(8)}</td><td>${ (fc_data.shortlink.lastDone == 0 ? "never" : moment(parseInt(fc_data.shortlink.lastDone)).fromNow())}</td></tr>`
+				fc_table_string += `<tr><td>Shortlink</td><td>${fc_data.shortlink.claimcount}</td><td>${fc_data.shortlink.totalearn.toFixed(2)}</td><td>${ (fc_data.shortlink.lastDone == 0 ? "never" : moment(parseInt(fc_data.shortlink.lastDone)).fromNow())}</td></tr>`
 				//table part for faucet claim
-				fc_table_string += `<tr><td>Faucet</td><td>${fc_data.faucet.claimcount}</td><td>${fc_data.faucet.claimcount.toFixed(8)}</td><td>${ (fc_data.faucet.lastDone == 0 ? "never" : moment(parseInt(fc_data.faucet.lastDone)).fromNow())}</td></tr>`
+				fc_table_string += `<tr><td>Faucet</td><td>${fc_data.faucet.claimcount}</td><td>${fc_data.faucet.totalearn.toFixed(2)}</td><td>${ (fc_data.faucet.lastDone == 0 ? "never" : moment(parseInt(fc_data.faucet.lastDone)).fromNow())}</td></tr>`
 				
 
 

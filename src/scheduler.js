@@ -123,7 +123,7 @@ export default class Scheduler {
             //click on log in
             await this.browser.page.click('.main-button.main-button-yellow.login.bg-3');
             
-            await this.browser.page.waitForNavigation({ waitUntil: 'load', timeout: 0 });
+            await this.browser.page.waitForNavigation();
             await sleep(3000)
             
             const list_page = await this.browser.browser.pages()
@@ -262,8 +262,21 @@ export default class Scheduler {
                 //wait for timer
                 await sleep((randomInt(3, 10) + timer_for_ptc) * 1000)
 
-                //click on continue
-                await this.browser.page.click('.notranslate.inline-flex.rounded-md.shadow-sm > a');
+                //try multiple click on continue
+				try {
+					await this.browser.page.click('.notranslate.inline-flex.rounded-md.shadow-sm > a');
+				} catch (error) {
+					//PASS
+				}
+				try {
+					await this.browser.page.click('.inline-flex.rounded-md.shadow-sm > a');
+				} catch (error) {
+					//PASS
+				}
+                
+				
+				
+				
                 await this.browser.page.waitForNavigation();
                 await sleep(5000)
 
