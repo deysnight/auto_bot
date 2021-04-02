@@ -1,0 +1,18 @@
+2021/04/02-03:24:30.794 1be8 Reusing MANIFEST E:\Documents\repo_git\auto_bot\puppeteer_autobot\Default\Session Storage/MANIFEST-000001
+2021/04/02-03:24:30.800 1be8 Recovering log #11
+2021/04/02-03:24:30.801 1be8 Reusing old log E:\Documents\repo_git\auto_bot\puppeteer_autobot\Default\Session Storage/000011.log 
+2021/04/02-03:34:08.100 1be8 Level-0 table #15: started
+2021/04/02-03:34:08.150 1be8 Level-0 table #15: 45605 bytes OK
+2021/04/02-03:34:08.218 1be8 Delete type=0 #11
+2021/04/02-03:52:17.653 4128 Level-0 table #17: started
+2021/04/02-03:52:17.800 4128 Level-0 table #17: 38104 bytes OK
+2021/04/02-03:52:17.867 4128 Delete type=0 #14
+2021/04/02-03:52:17.867 3c88 Compacting 4@0 + 1@1 files
+2021/04/02-03:52:18.060 3c88 Generated table #18@0: 514 keys, 25813 bytes
+2021/04/02-03:52:18.060 3c88 Compacted 4@0 + 1@1 files => 25813 bytes
+2021/04/02-03:52:18.209 3c88 compacted to: files[ 0 1 1 0 0 0 0 ]
+2021/04/02-03:52:18.210 3c88 Delete type=2 #7
+2021/04/02-03:52:18.210 3c88 Delete type=2 #9
+2021/04/02-03:52:18.210 3c88 Delete type=2 #12
+2021/04/02-03:52:18.210 3c88 Delete type=2 #15
+2021/04/02-03:52:18.210 3c88 Delete type=2 #17

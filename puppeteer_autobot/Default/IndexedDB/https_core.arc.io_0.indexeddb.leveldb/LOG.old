@@ -1,0 +1,15 @@
+2021/04/02-03:45:52.674 398c Reusing MANIFEST E:\Documents\repo_git\auto_bot\puppeteer_autobot\Default\IndexedDB\https_core.arc.io_0.indexeddb.leveldb/MANIFEST-000001
+2021/04/02-03:45:52.674 398c Recovering log #15
+2021/04/02-03:45:52.674 398c Reusing old log E:\Documents\repo_git\auto_bot\puppeteer_autobot\Default\IndexedDB\https_core.arc.io_0.indexeddb.leveldb/000015.log 
+2021/04/02-03:46:27.627 1e50 Level-0 table #20: started
+2021/04/02-03:46:27.670 1e50 Level-0 table #20: 1146 bytes OK
+2021/04/02-03:46:27.687 1e50 Delete type=0 #15
+2021/04/02-03:46:27.687 1e50 Manual compaction at level-0 from (begin) .. (end); will stop at (end)
+2021/04/02-03:46:27.687 1e50 Manual compaction at level-1 from (begin) .. (end); will stop at '\x00\x01\x01\x02\x01\x14\x00_\x00i\x00m\x00m\x00o\x00r\x00t\x00a\x00l\x00|\x00A\x00r\x00c\x00_\x00n\x00o\x00d\x00e\x00I\x00d' @ 329 : 1
+2021/04/02-03:46:27.688 1e50 Compacting 1@1 + 1@2 files
+2021/04/02-03:46:27.727 1e50 Generated table #21@1: 49 keys, 967 bytes
+2021/04/02-03:46:27.727 1e50 Compacted 1@1 + 1@2 files => 967 bytes
+2021/04/02-03:46:27.753 1e50 compacted to: files[ 0 0 1 0 0 0 0 ]
+2021/04/02-03:46:27.753 1e50 Delete type=2 #17
+2021/04/02-03:46:27.753 1e50 Delete type=2 #20
+2021/04/02-03:46:27.754 1e50 Manual compaction at level-1 from '\x00\x01\x01\x02\x01\x14\x00_\x00i\x00m\x00m\x00o\x00r\x00t\x00a\x00l\x00|\x00A\x00r\x00c\x00_\x00n\x00o\x00d\x00e\x00I\x00d' @ 329 : 1 .. (end); will stop at (end)

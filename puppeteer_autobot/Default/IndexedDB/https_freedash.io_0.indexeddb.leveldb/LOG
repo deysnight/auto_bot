@@ -1,0 +1,5 @@
+2021/04/02-03:41:38.185 2570 Reusing MANIFEST E:\Documents\repo_git\auto_bot\puppeteer_autobot\Default\IndexedDB\https_freedash.io_0.indexeddb.leveldb/MANIFEST-000001
+2021/04/02-03:41:47.063 2570 Level-0 table #5: started
+2021/04/02-03:41:47.101 2570 Level-0 table #5: 1742 bytes OK
+2021/04/02-03:41:47.137 2570 Delete type=0 #3
+2021/04/02-03:41:47.138 2570 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

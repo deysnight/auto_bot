@@ -111,7 +111,6 @@ export default class Storage {
 
     fc_checkTimeout = (timeout) => {
         const now = Date.now()
-        Math.min(2, 3, 1)
         const last = Math.min(this.fc_data.ptc.lastDone, this.fc_data.shortlink.lastDone, this.fc_data.faucet.lastDone)
         if (now - last > timeout * 1000) {
             return true

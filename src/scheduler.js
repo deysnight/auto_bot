@@ -222,6 +222,7 @@ export default class Scheduler {
         });
         await sleep(1000)
 
+
         //START PTC
         if (available_ptc == true) {
             //goto ptc page
@@ -325,9 +326,103 @@ export default class Scheduler {
         });
         await sleep(1000)
 
-        //START PTC
+        //START SHORTLINK
         if (available_shortlink == true) {
-            console.log("shortlink")
+
+            await this.browser.page.click('.px-2.py-4.space-y-1.w-full.relative > div:nth-child(2) > a:nth-child(4)');
+            await sleep(5000)
+
+            do {
+                //get remaining shortlink
+                const nb_shortlink_remaining = await this.browser.page.$eval('.grid.grid-responsive-4 > div:nth-child(3) > div > div > div:nth-child(2) > h4', (divs) => {
+                    return parseInt(divs.innerText);
+                });
+
+                const number_box_shortlink = await this.browser.page.$eval('.grid.grid-responsive-3', (divs) => {
+                    return parseFloat(divs.children.length);
+                });
+
+                var current_path_shortlink = undefined;
+
+                for(var i = 1; i < number_box_shortlink+1; i++) {
+                    var tmp = await this.browser.page.$eval('.grid.grid-responsive-3 > div:nth-child(' + i +') > div > h3', (divs) => {
+                        return (divs.innerText);
+                    });
+
+                    var tmp_count = await this.browser.page.$eval('.grid.grid-responsive-3 > div:nth-child(' + i +') > div:nth-child(2) > div > div > div > div', (divs) => {
+                        return parseFloat(divs.innerText.split('/')[0]);
+                    });
+
+                    if ((tmp == "Sh.faucetcrypto.com" || tmp == "Sh.faucet.gold") && tmp_count > 0) { current_path_shortlink = i}
+                }
+
+
+                //get shortlink reward
+                let sl_reward = await this.browser.page.$eval('.grid.grid-responsive-3 > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1)', (divs) => {
+                    return parseFloat(divs.innerText.split(' ')[0]);
+                });
+
+
+                //click on shortlink
+                await this.browser.page.click('.grid.grid-responsive-3 > div:nth-child(' + (current_path_shortlink) +') > div:nth-child(2) > div:nth-child(2) > span > a');
+                await this.browser.page.waitForNavigation();
+                await sleep(5000)
+
+                //shortlink interpage
+                await this.browser.page.waitForFunction("document.querySelector('.flex.justify-center.my-6 > div:nth-child(1) > span:nth-child(1) > button:nth-child(2)').classList.contains('cursor-not-allowed') == false")
+                await sleep(randomInt(2,7) * 1000)
+                await this.browser.page.click('.flex.justify-center.my-6 > div:nth-child(1) > span:nth-child(1) > button:nth-child(2)');
+
+                await this.browser.page.waitForNavigation();
+                await sleep(5000)
+
+                for (var i = 0; i < 3; i++) {
+                    await sleep(1000)
+                    //click on button to start timer
+                    await this.browser.page.evaluate(() => {
+                        document.querySelector("#showTimerText").click()
+                    });
+                    await sleep(5000)
+                    //wait for timer
+                    await this.browser.page.waitForFunction("document.querySelector('#main-button').hasAttribute('disabled') == false")
+                    await sleep(3000)
+                    //click on button to continue
+                    await this.browser.page.evaluate(() => {
+                        document.querySelector("#main-button").click()
+                    });
+
+                    await sleep(5000)
+                }
+                
+                await sleep(randomInt(3,8) * 1000)
+
+                //get new balance
+                const new_current_balance = await this.browser.page.$eval('.flex.badge.text-bg-yellow.py-1.transition.duration-150.ease-in-out', (divs) => {
+                    return parseFloat(divs.innerText.split(' ')[0]);
+                });
+
+                const old_nb_shortlink_remaining = nb_shortlink_remaining
+                //get remaining shortlink
+                nb_shortlink_remaining = await this.browser.page.$eval('.grid.grid-responsive-4 > div:nth-child(3) > div > div > div:nth-child(2) > h4', (divs) => {
+                    return parseInt(divs.innerText);
+                });
+
+                // if shortlink succed
+                if (old_nb_shortlink_remaining != nb_shortlink_remaining) {
+                    this.data.faucetcrypto.currentbalance = new_current_balance
+                    this.data.faucetcrypto.shortlink.claimcount += 1
+                    this.data.faucetcrypto.shortlink.totalearn += sl_reward
+                    if (nb_shortlink_remaining < 3) {
+                        this.data.faucetcrypto.shortlink.lastDone = Date.now()
+                        this.storage.fc_update_last("shortlink")
+                        current_path_shortlink = undefined
+                    }
+                    this.save_state()
+                }
+
+
+
+            } while (current_path_shortlink != undefined)
         }
 
         

@@ -1,0 +1,15 @@
+2021/04/02-03:42:42.185 106c Reusing MANIFEST E:\Documents\repo_git\auto_bot\puppeteer_autobot\Default\IndexedDB\https_freenem.com_0.indexeddb.leveldb/MANIFEST-000001
+2021/04/02-03:42:42.186 106c Recovering log #4
+2021/04/02-03:42:42.186 106c Reusing old log E:\Documents\repo_git\auto_bot\puppeteer_autobot\Default\IndexedDB\https_freenem.com_0.indexeddb.leveldb/000004.log 
+2021/04/02-03:42:52.675 2a40 Level-0 table #8: started
+2021/04/02-03:42:52.723 2a40 Level-0 table #8: 510 bytes OK
+2021/04/02-03:42:52.760 2a40 Delete type=0 #4
+2021/04/02-03:42:52.761 2a40 Manual compaction at level-0 from (begin) .. (end); will stop at (end)
+2021/04/02-03:42:52.761 2a40 Manual compaction at level-1 from (begin) .. (end); will stop at '\x00\x02\x01\x02\x01\x0b\x00a\x00s\x00k\x00G\x00i\x00d\x00r\x00a\x00t\x00o\x00r' @ 113 : 1
+2021/04/02-03:42:52.761 2a40 Compacting 1@1 + 1@2 files
+2021/04/02-03:42:52.802 2a40 Generated table #9@1: 34 keys, 814 bytes
+2021/04/02-03:42:52.802 2a40 Compacted 1@1 + 1@2 files => 814 bytes
+2021/04/02-03:42:52.827 2a40 compacted to: files[ 0 0 1 0 0 0 0 ]
+2021/04/02-03:42:52.827 2a40 Delete type=2 #5
+2021/04/02-03:42:52.827 2a40 Delete type=2 #8
+2021/04/02-03:42:52.846 2a40 Manual compaction at level-1 from '\x00\x02\x01\x02\x01\x0b\x00a\x00s\x00k\x00G\x00i\x00d\x00r\x00a\x00t\x00o\x00r' @ 113 : 1 .. (end); will stop at (end)

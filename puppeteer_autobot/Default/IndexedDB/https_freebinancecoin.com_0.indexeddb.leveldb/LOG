@@ -1,0 +1,5 @@
+2021/04/02-03:54:05.196 49b8 Reusing MANIFEST E:\Documents\repo_git\auto_bot\puppeteer_autobot\Default\IndexedDB\https_freebinancecoin.com_0.indexeddb.leveldb/MANIFEST-000001
+2021/04/02-03:54:15.896 18d8 Level-0 table #5: started
+2021/04/02-03:54:15.942 18d8 Level-0 table #5: 1759 bytes OK
+2021/04/02-03:54:15.976 18d8 Delete type=0 #3
+2021/04/02-03:54:15.976 18d8 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

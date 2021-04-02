@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer-extra'
 import StealthPlugin from 'puppeteer-extra-plugin-stealth'
+import path from 'path'
 //import cv from 'opencv4nodejs'
 
 class Browser {
@@ -12,6 +13,7 @@ class Browser {
                 deviceScaleFactor: 1,
             },
             args: ['--no-sandbox'],
+            userDataDir: 'E:\\Documents\\repo_git\\auto_bot\\puppeteer_autobot',
             headless: false
         })
 

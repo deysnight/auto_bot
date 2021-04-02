@@ -1,0 +1,5 @@
+2021/04/02-03:49:23.825 2dec Reusing MANIFEST E:\Documents\repo_git\auto_bot\puppeteer_autobot\Default\IndexedDB\https_pipeflare.io_0.indexeddb.leveldb/MANIFEST-000001
+2021/04/02-03:49:27.114 4164 Level-0 table #5: started
+2021/04/02-03:49:27.159 4164 Level-0 table #5: 822 bytes OK
+2021/04/02-03:49:27.200 4164 Delete type=0 #3
+2021/04/02-03:49:27.200 4164 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

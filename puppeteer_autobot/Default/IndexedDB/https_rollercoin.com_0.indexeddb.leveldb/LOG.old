@@ -1,0 +1,5 @@
+2021/03/31-02:09:37.742 46b8 Reusing MANIFEST E:\Documents\repo_git\auto_bot\puppeteer_autobot\Default\IndexedDB\https_rollercoin.com_0.indexeddb.leveldb/MANIFEST-000001
+2021/03/31-02:10:13.742 2ed0 Level-0 table #5: started
+2021/03/31-02:10:13.802 2ed0 Level-0 table #5: 7248 bytes OK
+2021/03/31-02:10:13.838 2ed0 Delete type=0 #3
+2021/03/31-02:10:13.838 2ed0 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

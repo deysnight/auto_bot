@@ -1,0 +1,15 @@
+2021/04/02-03:51:55.963 4164 Reusing MANIFEST E:\Documents\repo_git\auto_bot\puppeteer_autobot\Default\IndexedDB\https_freetether.com_0.indexeddb.leveldb/MANIFEST-000001
+2021/04/02-03:51:55.963 4164 Recovering log #4
+2021/04/02-03:51:55.963 4164 Reusing old log E:\Documents\repo_git\auto_bot\puppeteer_autobot\Default\IndexedDB\https_freetether.com_0.indexeddb.leveldb/000004.log 
+2021/04/02-03:52:06.579 808 Level-0 table #8: started
+2021/04/02-03:52:06.619 808 Level-0 table #8: 529 bytes OK
+2021/04/02-03:52:06.661 808 Delete type=0 #4
+2021/04/02-03:52:06.662 808 Manual compaction at level-0 from (begin) .. (end); will stop at (end)
+2021/04/02-03:52:06.662 808 Manual compaction at level-1 from (begin) .. (end); will stop at '\x00\x02\x01\x02\x01\x0b\x00a\x00s\x00k\x00G\x00i\x00d\x00r\x00a\x00t\x00o\x00r' @ 113 : 1
+2021/04/02-03:52:06.662 808 Compacting 1@1 + 1@2 files
+2021/04/02-03:52:06.713 808 Generated table #9@1: 35 keys, 877 bytes
+2021/04/02-03:52:06.713 808 Compacted 1@1 + 1@2 files => 877 bytes
+2021/04/02-03:52:06.753 808 compacted to: files[ 0 0 1 0 0 0 0 ]
+2021/04/02-03:52:06.753 808 Delete type=2 #5
+2021/04/02-03:52:06.753 808 Delete type=2 #8
+2021/04/02-03:52:06.754 808 Manual compaction at level-1 from '\x00\x02\x01\x02\x01\x0b\x00a\x00s\x00k\x00G\x00i\x00d\x00r\x00a\x00t\x00o\x00r' @ 113 : 1 .. (end); will stop at (end)
