@@ -1,1 +1,3 @@
-console.log('hello wesh');
+import App from './services/app.service';
+
+new App();
