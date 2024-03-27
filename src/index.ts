@@ -1,3 +1,3 @@
-import App from './services/app.service';
+import App from './services/app.service.js';
 
 new App();
