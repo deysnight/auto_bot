@@ -5,13 +5,17 @@ import expressConfig from '../config/express.config.js';
 import envConfig from '../config/env.config.js';
 import webApi from '../webapi';
 import sBrowser from './browser.service.js';
+import Store from './storage.service.js';
+import { signal } from '../entities/global.enum.js';
 
 class App {
   expressApp: Application;
 
   constructor() {
+    Store.getStore();
     this.expressApp = express();
     this.start();
+    this.initSignal();
   }
 
   async start() {
@@ -36,6 +40,20 @@ class App {
     // Object.values(webApi).forEach((WebApi) => {
     //   new WebApi(this.expressApp);
     // });
+  }
+
+  initSignal() {
+    process.on('SIGINT', () => process.exit());
+    process.on('SIGTERM', () => process.exit());
+
+    const store = Store.getStore();
+    process.on(signal.PIDFILE, () => store.setSignalState(signal.PIDFILE));
+    process.on(signal.GLOBALSAVEFILE, () =>
+      store.setSignalState(signal.GLOBALSAVEFILE)
+    );
+    process.on(signal.TASKSSAVEFILE, () =>
+      store.setSignalState(signal.TASKSSAVEFILE)
+    );
   }
 }
 
