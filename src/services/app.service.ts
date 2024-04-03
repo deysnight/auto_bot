@@ -6,7 +6,8 @@ import envConfig from '../config/env.config.js';
 import webApi from '../webapi';
 import sBrowser from './browser.service.js';
 import Store from './storage.service.js';
-import { signal } from '../entities/global.enum.js';
+import { eSignal } from '../entities/global.enum.js';
+import Scheduler from './scheduler.service.js';
 
 class App {
   expressApp: Application;
@@ -30,6 +31,7 @@ class App {
 
     // const tmp = new sBrowser();
     // tmp.init();
+    const tmp = new Scheduler();
 
     this.expressApp.listen(envConfig.api.port, () =>
       console.log(
@@ -47,12 +49,12 @@ class App {
     process.on('SIGTERM', () => process.exit());
 
     const store = Store.getStore();
-    process.on(signal.PIDFILE, () => store.setSignalState(signal.PIDFILE));
-    process.on(signal.GLOBALSAVEFILE, () =>
-      store.setSignalState(signal.GLOBALSAVEFILE)
+    process.on(eSignal.PIDFILE, () => store.setSignalState(eSignal.PIDFILE));
+    process.on(eSignal.GLOBALSAVEFILE, () =>
+      store.setSignalState(eSignal.GLOBALSAVEFILE)
     );
-    process.on(signal.TASKSSAVEFILE, () =>
-      store.setSignalState(signal.TASKSSAVEFILE)
+    process.on(eSignal.TASKSSAVEFILE, () =>
+      store.setSignalState(eSignal.TASKSSAVEFILE)
     );
   }
 }

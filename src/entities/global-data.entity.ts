@@ -10,7 +10,7 @@ import {
 } from 'fs';
 import IGlobalData from './ientities/iglobal-data.entity.js';
 import envConfig from '../config/env.config.js';
-import { signal } from './global.enum.js';
+import { eSignal } from './global.enum.js';
 
 class GlobalData implements IGlobalData {
   private defaultGlobalSaveFile: string = path.join(
@@ -48,7 +48,7 @@ class GlobalData implements IGlobalData {
     } as IGlobalData;
 
     writeFileSync(filePath, JSON.stringify(tmpToSave), { flag: 'w+' });
-    (process.emit as Function)(signal.GLOBALSAVEFILE);
+    (process.emit as Function)(eSignal.GLOBALSAVEFILE);
   }
 }
 

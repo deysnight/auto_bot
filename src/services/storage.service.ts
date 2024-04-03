@@ -1,15 +1,15 @@
 import GlobalData from '../entities/global-data.entity.js';
 import TasksData from '../entities/tasks-data.entity.js';
-import { signal } from '../entities/global.enum.js';
+import { eSignal } from '../entities/global.enum.js';
 
 class Store {
   private static instance: Store;
   private globalData: GlobalData;
   private tasksData: TasksData;
   private signalState = {
-    [signal.PIDFILE]: false,
-    [signal.GLOBALSAVEFILE]: false,
-    [signal.TASKSSAVEFILE]: false,
+    [eSignal.PIDFILE]: false,
+    [eSignal.GLOBALSAVEFILE]: false,
+    [eSignal.TASKSSAVEFILE]: false,
   };
 
   private constructor() {
@@ -27,7 +27,7 @@ class Store {
     return Store.instance;
   }
 
-  setSignalState(event: signal) {
+  setSignalState(event: eSignal) {
     this.signalState[event] = true;
     console.log(`${event} sema released`);
 

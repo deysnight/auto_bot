@@ -1,7 +1,12 @@
+import { ePriority } from '../global.enum';
+import IDelay from './idelay.entity';
+
 interface ITaskConfigData {
-  exec_interval: null;
-  priority: null;
+  cron: string;
+  delay: IDelay;
+  priority: ePriority;
   enabled: boolean;
+  execCount: number;
 }
 
 export default ITaskConfigData;

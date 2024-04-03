@@ -4,7 +4,7 @@ import TaskConfigData from './task-config-data.entity.js';
 import TaskInternalData from './task-internal-data.entity.js';
 import envConfig from '../config/env.config.js';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
-import { signal } from './global.enum.js';
+import { eSignal } from './global.enum.js';
 
 class TasksData implements ITasksData {
   private defaultTasksSaveFile: string = path.join(
@@ -44,7 +44,7 @@ class TasksData implements ITasksData {
     } as ITasksData;
 
     writeFileSync(filePath, JSON.stringify(tmpToSave), { flag: 'w+' });
-    (process.emit as Function)(signal.TASKSSAVEFILE);
+    (process.emit as Function)(eSignal.TASKSSAVEFILE);
   }
 }
 
