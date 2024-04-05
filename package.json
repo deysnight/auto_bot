@@ -7,8 +7,8 @@
     "ng:build": "ng build",
     "start:back:dev": "cross-env NODE_ENV=development npx nodemon",
     "build": "rimraf ./build && ng build && tsc",
-    "start:dev": "cross-env NODE_ENV=development npm run build && node build/index.js",
-    "start": "cross-env NODE_ENV=production npm run build && node build/index.js"
+    "start:dev": "cross-env NODE_ENV=development npm run build && node build/src/index.js",
+    "start": "cross-env NODE_ENV=production npm run build && node build/src/index.js"
   },
   "private": true,
   "type": "module",
