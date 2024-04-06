@@ -1,5 +1,5 @@
 import { openSync, writeSync, unlinkSync, closeSync } from 'fs';
-import { signal } from '../entities/global.enum.js';
+import { eSignal } from '../entities/global.enum.js';
 
 class PID {
   path: string;
@@ -11,7 +11,7 @@ class PID {
   remove(path: string) {
     try {
       unlinkSync(path);
-      (process.emit as Function)(signal.PIDFILE);
+      (process.emit as Function)(eSignal.PIDFILE);
       return true;
     } catch (err) {
       return false;
