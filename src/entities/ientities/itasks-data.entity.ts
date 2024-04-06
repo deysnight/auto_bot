@@ -7,6 +7,8 @@ interface ITasksData {
 
   load(): void;
   save(): void;
+  updateTasksMap(): void;
+  getTaskConfigData(taskName: string): TaskConfigData | undefined;
 }
 
 export default ITasksData;

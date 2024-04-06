@@ -1,9 +1,13 @@
 import GlobalData from '../entities/global-data.entity.js';
 import TasksData from '../entities/tasks-data.entity.js';
 import { eSignal } from '../entities/global.enum.js';
+import Scheduler from './scheduler.service.js';
+import sBrowser from './browser.service.js';
 
 class Store {
   private static instance: Store;
+  private refScheduler!: Scheduler;
+  private refBrowser!: sBrowser;
   private globalData: GlobalData;
   private tasksData: TasksData;
   private signalState = {
@@ -18,6 +22,7 @@ class Store {
 
     this.globalData.load();
     this.tasksData.load();
+    this.tasksData.updateTasksMap();
   }
 
   static getStore(): Store {
@@ -25,6 +30,22 @@ class Store {
       Store.instance = new Store();
     }
     return Store.instance;
+  }
+
+  setRefScheduler(ref: Scheduler) {
+    this.refScheduler = ref;
+  }
+
+  getRefScheduler(): Scheduler {
+    return this.refScheduler;
+  }
+
+  setRefBrowser(ref: sBrowser) {
+    this.refBrowser = ref;
+  }
+
+  getRefBrowser(): sBrowser {
+    return this.refBrowser;
   }
 
   setSignalState(event: eSignal) {

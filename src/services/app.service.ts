@@ -3,7 +3,7 @@ import express, { Application } from 'express';
 import npid from '../utils/pid.js';
 import expressConfig from '../config/express.config.js';
 import envConfig from '../config/env.config.js';
-import webApi from '../webapi';
+// import webApi from '../webapi';
 import sBrowser from './browser.service.js';
 import Store from './storage.service.js';
 import { eSignal } from '../entities/global.enum.js';
@@ -29,9 +29,12 @@ class App {
     }
     this.expressApp = expressConfig(this.expressApp);
 
-    // const tmp = new sBrowser();
-    // tmp.init();
-    const tmp = new Scheduler();
+    const tmpStore = Store.getStore();
+    const tmpBrowser = new sBrowser();
+    tmpStore.setRefBrowser(tmpBrowser);
+    tmpBrowser.init();
+    const tmpScheduler = new Scheduler();
+    tmpStore.setRefScheduler(tmpScheduler);
 
     this.expressApp.listen(envConfig.api.port, () =>
       console.log(
