@@ -6,8 +6,11 @@ export default {
   appName: process.env['APP_NAME'],
   pidFile: process.env['PID_FILE']!,
   env: process.env['NODE_ENV'],
-  globalSaveFile: process.env['GLOBAL_SAVE_FILE'],
-  tasksSaveFile: process.env['TASKS_SAVE_FILE'],
+  scheduler: {
+    autostart: process.env['AUTOSTART'],
+    globalSaveFile: process.env['GLOBAL_SAVE_FILE'],
+    tasksSaveFile: process.env['TASKS_SAVE_FILE'],
+  },
   browser: {
     headless: process.env['BROWSER_HEADLESS'] === 'true',
     width: +process.env['BROWSER_WIDTH']!,

@@ -1,7 +1,10 @@
+import { ePriority } from '../global.enum';
+
 interface ITaskQueueItem {
   name: string;
+  id: string;
+  priority: ePriority;
   execTime: Date;
-  execIndex: number;
 }
 
 export default ITaskQueueItem;

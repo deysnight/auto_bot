@@ -8,7 +8,6 @@ interface ITaskConfigData {
   delay: IDelay;
   priority: ePriority;
   enabled: boolean;
-  execCount: number;
 }
 
 export default ITaskConfigData;

@@ -23,7 +23,8 @@ class TasksData implements ITasksData {
 
   load(): void {
     try {
-      const filePath = envConfig.tasksSaveFile || this.defaultTasksSaveFile;
+      const filePath =
+        envConfig.scheduler.tasksSaveFile || this.defaultTasksSaveFile;
       if (!existsSync(filePath)) {
         return;
       }
@@ -39,7 +40,8 @@ class TasksData implements ITasksData {
   }
 
   save(): void {
-    const filePath = envConfig.tasksSaveFile || this.defaultTasksSaveFile;
+    const filePath =
+      envConfig.scheduler.tasksSaveFile || this.defaultTasksSaveFile;
     const tmpToSave = {
       taskConfigData: this.taskConfigData,
       taskInternalData: this.taskInternalData,
@@ -61,6 +63,10 @@ class TasksData implements ITasksData {
 
   addTaskConfigData(newTaskConfigData: TaskConfigData): void {
     this.taskConfigData.push(newTaskConfigData);
+  }
+
+  getEnabledTask(): TaskConfigData[] {
+    return this.taskConfigData.filter((item) => item.enabled === true);
   }
 
   updateTasksMap(): void {

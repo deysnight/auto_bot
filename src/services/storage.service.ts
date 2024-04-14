@@ -3,6 +3,7 @@ import TasksData from '../entities/tasks-data.entity.js';
 import { eSignal } from '../entities/global.enum.js';
 import Scheduler from './scheduler.service.js';
 import sBrowser from './browser.service.js';
+import TaskConfigData from '../entities/task-config-data.entity.js';
 
 class Store {
   private static instance: Store;
@@ -46,6 +47,10 @@ class Store {
 
   getRefBrowser(): sBrowser {
     return this.refBrowser;
+  }
+
+  getEnabledTask(): TaskConfigData[] {
+    return this.tasksData.getEnabledTask();
   }
 
   setSignalState(event: eSignal) {

@@ -9,6 +9,8 @@ interface ITasksData {
   save(): void;
   updateTasksMap(): void;
   getTaskConfigData(taskName: string): TaskConfigData | undefined;
+  addTaskConfigData(newTaskConfigData: TaskConfigData): void;
+  getEnabledTask(): TaskConfigData[];
 }
 
 export default ITasksData;

@@ -10,7 +10,6 @@ class TaskConfigData extends TaskId implements ITaskConfigData {
   delay: IDelay = { enabled: false, minDelay: 0, maxDelay: 0 };
   priority: ePriority = ePriority.NONE;
   enabled: boolean = false;
-  execCount: number = 0;
 }
 
 export default TaskConfigData;
