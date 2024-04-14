@@ -12,13 +12,15 @@ class Task implements ITask {
     this.taskName = name;
   }
 
-  init(): void {
+  async init(): Promise<void> {
     throw 'not implemented';
   }
-  run(): void {
+
+  async run(): Promise<void> {
     throw 'not implemented';
   }
-  afterRun(): void {
+
+  async afterRun(): Promise<void> {
     throw 'not implemented';
   }
 }

@@ -4,6 +4,8 @@ import { eSignal } from '../entities/global.enum.js';
 import Scheduler from './scheduler.service.js';
 import sBrowser from './browser.service.js';
 import TaskConfigData from '../entities/task-config-data.entity.js';
+import Task, { Type } from '../entities/task.entity.js';
+import IDelay from '../entities/ientities/idelay.entity.js';
 
 class Store {
   private static instance: Store;
@@ -51,6 +53,14 @@ class Store {
 
   getEnabledTask(): TaskConfigData[] {
     return this.tasksData.getEnabledTask();
+  }
+
+  getTaskConstructor(id: string): Type<Task> {
+    return this.tasksData.getTaskConstructor(id);
+  }
+
+  getTaskDelay(id: string): IDelay {
+    return this.tasksData.getTaskDelay(id);
   }
 
   setSignalState(event: eSignal) {

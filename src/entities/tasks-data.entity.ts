@@ -7,6 +7,8 @@ import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { eSignal } from './global.enum.js';
 import Tasks from '../../tasks/index.js';
 import { simpleHash } from '../utils/simpleHash.js';
+import Task, { Type } from './task.entity.js';
+import IDelay from './ientities/idelay.entity.js';
 
 class TasksData implements ITasksData {
   private defaultTasksSaveFile: string = path.join(
@@ -67,6 +69,16 @@ class TasksData implements ITasksData {
 
   getEnabledTask(): TaskConfigData[] {
     return this.taskConfigData.filter((item) => item.enabled === true);
+  }
+
+  getTaskConstructor(id: string): Type<Task> {
+    const task = this.taskConfigData.find((item) => item.id === id);
+    return task!.handle;
+  }
+
+  getTaskDelay(id: string): IDelay {
+    const task = this.taskConfigData.find((item) => item.id === id);
+    return task!.delay;
   }
 
   updateTasksMap(): void {

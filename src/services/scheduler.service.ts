@@ -10,6 +10,8 @@ class Scheduler {
   currentTaskInstance?: ITask;
   mainState: eMainState = eMainState.NONE;
   stateMachineHandle?: NodeJS.Timeout;
+  currenttasktargetedDelay?: number;
+  currenttaskcurrentDelay?: number;
 
   constructor() {}
 
@@ -36,6 +38,155 @@ class Scheduler {
       (a, b) =>
         a.execTime.getTime() - b.execTime.getTime() || b.priority - a.priority
     );
+
+    console.log(
+      this.taskQueue.map((item) => {
+        return {
+          name: item.name,
+          execTime: item.execTime,
+          prio: item.priority,
+        };
+      })
+    );
+  }
+
+  getCurrentTask(): ITaskQueueItem {
+    return this.taskQueue.at(0)!;
+  }
+
+  removeCurrentTask(): void {
+    this.taskQueue.shift();
+  }
+
+  changeState(newState: eMainState) {
+    this.mainState = newState;
+    console.log(
+      `[Scheduler] State machine switched to ${eMainState[newState]}`
+    );
+  }
+
+  startMainLoop() {
+    if (this.mainState !== eMainState.NONE) {
+      return;
+    }
+    this.changeState(eMainState.IDLE);
+
+    this.stateMachineHandle = setInterval(async () => {
+      await this.stateMachine();
+    }, 1000);
+    console.log('[Scheduler] State machine started');
+  }
+
+  stopMainLoop() {
+    if (this.mainState === eMainState.NONE) {
+      return;
+    }
+    clearInterval(this.stateMachineHandle);
+    this.changeState(eMainState.NONE);
+    console.log('[Scheduler] State machine stopped');
+  }
+
+  autoMainLoop() {
+    if (this.mainState !== eMainState.NONE) {
+      return;
+    }
+    if (envConfig.scheduler.autostart) {
+      console.log('[Scheduler] State machine auto start');
+      this.startMainLoop();
+    }
+  }
+
+  async processStateIdle() {
+    if (this.getCurrentTask().execTime.getTime() <= Date.now()) {
+      this.changeState(eMainState.INIT);
+    }
+  }
+
+  async processStateInit() {
+    const taskConstructor = Store.getStore().getTaskConstructor(
+      this.getCurrentTask().id
+    );
+    this.currentTaskInstance = new taskConstructor();
+    this.changeState(eMainState.WAITINGDELAY);
+  }
+
+  async processStateClean() {
+    //update stats
+    this.removeCurrentTask();
+    this.updateTaskQueue();
+    this.changeState(eMainState.IDLE);
+  }
+
+  async processStateWaitingDelay() {
+    if (this.currenttasktargetedDelay === undefined) {
+      const taskDelay = Store.getStore().getTaskDelay(this.getCurrentTask().id);
+      if (taskDelay.enabled) {
+        this.currenttasktargetedDelay = randomIntFromInterval(
+          taskDelay.minDelay,
+          taskDelay.maxDelay
+        );
+        this.currenttaskcurrentDelay = 0;
+      } else {
+        this.changeState(eMainState.TASKINIT);
+      }
+    } else {
+      if (this.currenttaskcurrentDelay! > this.currenttasktargetedDelay) {
+        this.currenttasktargetedDelay = undefined;
+        this.currenttaskcurrentDelay = undefined;
+        this.changeState(eMainState.TASKINIT);
+      } else {
+        this.currenttaskcurrentDelay!++;
+      }
+    }
+  }
+
+  async processStateTaskInit() {
+    await this.currentTaskInstance!.init();
+    this.changeState(eMainState.TASKEXEC);
+  }
+
+  async processStateTaskExec() {
+    await this.currentTaskInstance!.run();
+    this.changeState(eMainState.TASKEND);
+  }
+
+  async processStateTaskEnd() {
+    await this.currentTaskInstance!.afterRun();
+    this.changeState(eMainState.CLEAN);
+  }
+
+  async stateMachine() {
+    // console.log(`bas alors ${this.taskQueue.length}`);
+
+    if (this.taskQueue.length === 0) return;
+
+    switch (this.mainState) {
+      case eMainState.IDLE:
+        await this.processStateIdle();
+        break;
+      case eMainState.INIT:
+        await this.processStateInit();
+        break;
+      case eMainState.CLEAN:
+        await this.processStateClean();
+        break;
+      case eMainState.WAITINGDELAY:
+        await this.processStateWaitingDelay();
+        break;
+      case eMainState.TASKINIT:
+        await this.processStateTaskInit();
+        break;
+      case eMainState.TASKEXEC:
+        await this.processStateTaskExec();
+        break;
+      case eMainState.TASKEND:
+        await this.processStateTaskEnd();
+        break;
+      default:
+        console.log('[Scheduler] State machine unknown state error');
+        process.exit(1);
+        break;
+    }
   }
 }
 

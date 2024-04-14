@@ -1,8 +1,8 @@
 interface ITask {
   taskName: string;
-  init(): void;
-  run(): void;
-  afterRun(): void;
+  init(): Promise<void>;
+  run(): Promise<void>;
+  afterRun(): Promise<void>;
 }
 
 export default ITask;

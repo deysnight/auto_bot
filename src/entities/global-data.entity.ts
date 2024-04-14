@@ -26,7 +26,8 @@ class GlobalData implements IGlobalData {
 
   load(): void {
     try {
-      const filePath = envConfig.globalSaveFile || this.defaultGlobalSaveFile;
+      const filePath =
+        envConfig.scheduler.globalSaveFile || this.defaultGlobalSaveFile;
       if (!existsSync(filePath)) {
         return;
       }
@@ -42,7 +43,8 @@ class GlobalData implements IGlobalData {
   }
 
   save(): void {
-    const filePath = envConfig.globalSaveFile || this.defaultGlobalSaveFile;
+    const filePath =
+      envConfig.scheduler.globalSaveFile || this.defaultGlobalSaveFile;
     const tmpToSave = {
       taskIdList: this.taskIdList,
     } as IGlobalData;

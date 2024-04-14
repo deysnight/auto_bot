@@ -35,6 +35,8 @@ class App {
     tmpBrowser.init();
     const tmpScheduler = new Scheduler();
     tmpStore.setRefScheduler(tmpScheduler);
+    tmpScheduler.init();
+    tmpScheduler.autoMainLoop();
 
     this.expressApp.listen(envConfig.api.port, () =>
       console.log(
