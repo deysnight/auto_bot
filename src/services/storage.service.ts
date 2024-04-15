@@ -72,6 +72,22 @@ class Store {
     this.tasksData.setTaskStats(id, varName, value);
   }
 
+  getTaskIntervalVarList(id: string): string[] {
+    return this.tasksData.getTaskIntervalVarList(id);
+  }
+
+  getTaskInternalVar(id: string, varName: string): string | number | undefined {
+    return this.tasksData.getTaskInternalVar(id, varName);
+  }
+
+  setTaskInternalVar(
+    id: string,
+    varName: string,
+    value: string | number
+  ): void {
+    this.tasksData.setTaskInternalVar(id, varName, value);
+  }
+
   setSignalState(event: eSignal) {
     this.signalState[event] = true;
     console.log(`${event} sema released`);

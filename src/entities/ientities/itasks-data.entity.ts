@@ -18,6 +18,9 @@ interface ITasksData {
   getTaskDelay(id: string): IDelay;
   getTaskStats(id: string, varName: eStatsLabel): number | Date;
   setTaskStats(id: string, varName: eStatsLabel, value: number | Date): void;
+  getTaskIntervalVarList(id: string): string[];
+  getTaskInternalVar(id: string, varName: string): string | number | undefined;
+  setTaskInternalVar(id: string, varName: string, value: string | number): void;
 }
 
 export default ITasksData;

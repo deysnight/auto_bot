@@ -96,6 +96,31 @@ class TasksData implements ITasksData {
     (task!.statistics as any)[eStatsLabel[varName]] = value;
   }
 
+  getTaskIntervalVarList(id: string): string[] {
+    const task = this.taskInternalData.find((item) => item.id === id);
+    return task!.internals.map((item) => item.name);
+  }
+
+  getTaskInternalVar(id: string, varName: string): string | number | undefined {
+    const task = this.taskInternalData.find((item) => item.id === id);
+    return task!.internals.find((item) => item.name === varName)?.value;
+  }
+
+  setTaskInternalVar(
+    id: string,
+    varName: string,
+    value: string | number
+  ): void {
+    const task = this.taskInternalData.find((item) => item.id === id)!;
+    const index = task!.internals.findIndex((item) => item.name === varName);
+
+    if (index === -1) {
+      task.internals.push({ name: varName, value: value });
+    } else {
+      task.internals.at(index)!.value = value;
+    }
+  }
+
   updateTasksMap(): void {
     Tasks.forEach((_task) => {
       const wantedTaskName = (_task as any).taskName;
