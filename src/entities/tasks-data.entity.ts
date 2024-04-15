@@ -9,6 +9,7 @@ import Tasks from '../../tasks/index.js';
 import { simpleHash } from '../utils/simpleHash.js';
 import Task, { Type } from './task.entity.js';
 import IDelay from './ientities/idelay.entity.js';
+import { eStatsLabel } from './ientities/istats.entity.js';
 
 class TasksData implements ITasksData {
   private defaultTasksSaveFile: string = path.join(
@@ -67,6 +68,10 @@ class TasksData implements ITasksData {
     this.taskConfigData.push(newTaskConfigData);
   }
 
+  addTaskInternalData(newTaskInternalData: TaskInternalData): void {
+    this.taskInternalData.push(newTaskInternalData);
+  }
+
   getEnabledTask(): TaskConfigData[] {
     return this.taskConfigData.filter((item) => item.enabled === true);
   }
@@ -81,6 +86,16 @@ class TasksData implements ITasksData {
     return task!.delay;
   }
 
+  getTaskStats(id: string, varName: eStatsLabel): number | Date {
+    const task = this.taskInternalData.find((item) => item.id === id);
+    return (task!.statistics as any)[eStatsLabel[varName]];
+  }
+
+  setTaskStats(id: string, varName: eStatsLabel, value: number | Date): void {
+    const task = this.taskInternalData.find((item) => item.id === id);
+    (task!.statistics as any)[eStatsLabel[varName]] = value;
+  }
+
   updateTasksMap(): void {
     Tasks.forEach((_task) => {
       const wantedTaskName = (_task as any).taskName;
@@ -93,7 +108,12 @@ class TasksData implements ITasksData {
         newTaskConfigData.name = wantedTaskName;
         newTaskConfigData.id = simpleHash(wantedTaskName);
 
+        const newTaskInternalData = new TaskInternalData();
+        newTaskInternalData.name = newTaskConfigData.name;
+        newTaskInternalData.id = newTaskConfigData.id;
+
         this.addTaskConfigData(newTaskConfigData);
+        this.addTaskInternalData(newTaskInternalData);
       }
     });
   }

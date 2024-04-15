@@ -4,6 +4,7 @@ import Store from './storage.service.js';
 import { eMainState } from '../entities/global.enum.js';
 import envConfig from '../config/env.config.js';
 import ITask from '../entities/ientities/itask.entity.js';
+import { eStatsLabel } from '../entities/ientities/istats.entity.js';
 
 class Scheduler {
   taskQueue: ITaskQueueItem[] = [];
@@ -12,6 +13,7 @@ class Scheduler {
   stateMachineHandle?: NodeJS.Timeout;
   currenttasktargetedDelay?: number;
   currenttaskcurrentDelay?: number;
+  startExecutionTime: Date = new Date(0);
 
   constructor() {}
 
@@ -107,11 +109,34 @@ class Scheduler {
       this.getCurrentTask().id
     );
     this.currentTaskInstance = new taskConstructor();
+    this.startExecutionTime = new Date();
     this.changeState(eMainState.WAITINGDELAY);
   }
 
   async processStateClean() {
-    //update stats
+    const id = this.getCurrentTask().id;
+    const store = Store.getStore();
+    const endExecutionTime = new Date();
+
+    let execCount = store.getTaskStats(
+      id,
+      eStatsLabel.executionCount
+    ) as number;
+    const execTime =
+      (endExecutionTime.getTime() - this.startExecutionTime.getTime()) / 1000;
+    const oldAvgExecTime = store.getTaskStats(
+      id,
+      eStatsLabel.averageExecutionTime
+    ) as number;
+
+    execCount++;
+    const newAvgExecTime =
+      oldAvgExecTime + (execTime - oldAvgExecTime) / execCount;
+
+    store.setTaskStats(id, eStatsLabel.executionCount, execCount);
+    store.setTaskStats(id, eStatsLabel.averageExecutionTime, newAvgExecTime);
+    store.setTaskStats(id, eStatsLabel.lastExecution, endExecutionTime);
+
     this.removeCurrentTask();
     this.updateTaskQueue();
     this.changeState(eMainState.IDLE);
@@ -156,36 +181,39 @@ class Scheduler {
   }
 
   async stateMachine() {
-    // console.log(`bas alors ${this.taskQueue.length}`);
+    try {
+      if (this.taskQueue.length === 0) return;
 
-    if (this.taskQueue.length === 0) return;
-
-    switch (this.mainState) {
-      case eMainState.IDLE:
-        await this.processStateIdle();
-        break;
-      case eMainState.INIT:
-        await this.processStateInit();
-        break;
-      case eMainState.CLEAN:
-        await this.processStateClean();
-        break;
-      case eMainState.WAITINGDELAY:
-        await this.processStateWaitingDelay();
-        break;
-      case eMainState.TASKINIT:
-        await this.processStateTaskInit();
-        break;
-      case eMainState.TASKEXEC:
-        await this.processStateTaskExec();
-        break;
-      case eMainState.TASKEND:
-        await this.processStateTaskEnd();
-        break;
-      default:
-        console.log('[Scheduler] State machine unknown state error');
-        process.exit(1);
-        break;
+      switch (this.mainState) {
+        case eMainState.IDLE:
+          await this.processStateIdle();
+          break;
+        case eMainState.INIT:
+          await this.processStateInit();
+          break;
+        case eMainState.CLEAN:
+          await this.processStateClean();
+          break;
+        case eMainState.WAITINGDELAY:
+          await this.processStateWaitingDelay();
+          break;
+        case eMainState.TASKINIT:
+          await this.processStateTaskInit();
+          break;
+        case eMainState.TASKEXEC:
+          await this.processStateTaskExec();
+          break;
+        case eMainState.TASKEND:
+          await this.processStateTaskEnd();
+          break;
+        default:
+          console.log('[Scheduler] State machine unknown state error');
+          process.exit(1);
+          break;
+      }
+    } catch (err) {
+      console.log(err);
+      process.exit(1);
     }
   }
 }

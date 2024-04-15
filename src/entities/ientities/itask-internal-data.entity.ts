@@ -1,5 +1,7 @@
+import ITaskStats from './istats.entity';
+
 interface ITaskInternalData {
-  ramdomvar: null;
+  statistics: ITaskStats;
 }
 
 export default ITaskInternalData;

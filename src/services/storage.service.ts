@@ -6,6 +6,7 @@ import sBrowser from './browser.service.js';
 import TaskConfigData from '../entities/task-config-data.entity.js';
 import Task, { Type } from '../entities/task.entity.js';
 import IDelay from '../entities/ientities/idelay.entity.js';
+import { eStatsLabel } from '../entities/ientities/istats.entity.js';
 
 class Store {
   private static instance: Store;
@@ -61,6 +62,14 @@ class Store {
 
   getTaskDelay(id: string): IDelay {
     return this.tasksData.getTaskDelay(id);
+  }
+
+  getTaskStats(id: string, varName: eStatsLabel): number | Date {
+    return this.tasksData.getTaskStats(id, varName);
+  }
+
+  setTaskStats(id: string, varName: eStatsLabel, value: number | Date): void {
+    this.tasksData.setTaskStats(id, varName, value);
   }
 
   setSignalState(event: eSignal) {
