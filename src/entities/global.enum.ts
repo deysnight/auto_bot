@@ -1,6 +1,7 @@
 export enum eSignal {
   GLOBALSAVEFILE = 'GlobalSaveFile',
   TASKSSAVEFILE = 'TasksSaveFile',
+  BROWSER = 'Browser',
   PIDFILE = 'PidFile',
 }
 

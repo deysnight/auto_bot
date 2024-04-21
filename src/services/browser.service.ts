@@ -4,6 +4,7 @@ import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import AdblockerPlugin from 'puppeteer-extra-plugin-adblocker';
 import envConfig from '../config/env.config.js';
 import path from 'path';
+import { eSignal } from '../entities/global.enum.js';
 
 class sBrowser {
   defaultUserDataDir: string = path.join(path.resolve(), 'puppeteer_autobot');
@@ -15,6 +16,8 @@ class sBrowser {
   async init() {
     puppeteer.use(StealthPlugin());
     puppeteer.use(AdblockerPlugin());
+
+    process.on('exit', () => this.close());
 
     this.browser = await puppeteer.launch({
       defaultViewport: {
@@ -28,7 +31,14 @@ class sBrowser {
     });
 
     this.page = (await this.browser.pages())[0];
-    await this.page.goto('https://www.google.com/');
+    await this.page.goto('https://www.google.com/', {
+      waitUntil: 'networkidle0',
+    });
+  }
+
+  async close() {
+    await this.browser?.close();
+    (process.emit as Function)(eSignal.BROWSER);
   }
 }
 

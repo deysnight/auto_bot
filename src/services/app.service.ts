@@ -28,7 +28,6 @@ class App {
       process.exit(1);
     }
     this.expressApp = expressConfig(this.expressApp);
-
     const tmpStore = Store.getStore();
     const tmpBrowser = new sBrowser();
     tmpStore.setRefBrowser(tmpBrowser);
@@ -37,7 +36,6 @@ class App {
     tmpStore.setRefScheduler(tmpScheduler);
     tmpScheduler.init();
     tmpScheduler.autoMainLoop();
-
     this.expressApp.listen(envConfig.api.port, () =>
       console.log(
         `[Server] ${envConfig.appName} listening on port ${envConfig.api.port} in ${envConfig.env} mode`
@@ -55,6 +53,7 @@ class App {
 
     const store = Store.getStore();
     process.on(eSignal.PIDFILE, () => store.setSignalState(eSignal.PIDFILE));
+    process.on(eSignal.BROWSER, () => store.setSignalState(eSignal.BROWSER));
     process.on(eSignal.GLOBALSAVEFILE, () =>
       store.setSignalState(eSignal.GLOBALSAVEFILE)
     );

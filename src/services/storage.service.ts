@@ -18,6 +18,7 @@ class Store {
     [eSignal.PIDFILE]: false,
     [eSignal.GLOBALSAVEFILE]: false,
     [eSignal.TASKSSAVEFILE]: false,
+    [eSignal.BROWSER]: false,
   };
 
   private constructor() {
