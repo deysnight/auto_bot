@@ -4,7 +4,7 @@ import TaskConfigData from './task-config-data.entity.js';
 import TaskInternalData from './task-internal-data.entity.js';
 import envConfig from '../config/env.config.js';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
-import { eSignal } from './global.enum.js';
+import { eSignal, eSignalExit } from './global.enum.js';
 import Tasks from '../../tasks/index.js';
 import { simpleHash } from '../utils/simpleHash.js';
 import Task, { Type } from './task.entity.js';
@@ -21,7 +21,7 @@ class TasksData implements ITasksData {
   taskInternalData: TaskInternalData[] = [];
 
   constructor() {
-    process.on('exit', () => this.save());
+    process.on(eSignalExit, () => this.save());
   }
 
   load(): void {

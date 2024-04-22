@@ -1,3 +1,5 @@
+export const eSignalExit = 'exitSignal';
+
 export enum eSignal {
   GLOBALSAVEFILE = 'GlobalSaveFile',
   TASKSSAVEFILE = 'TasksSaveFile',

@@ -1,12 +1,12 @@
 import 'dotenv/config';
 import express, { Application } from 'express';
-import npid from '../utils/pid.js';
+import npid from './pid.service.js';
 import expressConfig from '../config/express.config.js';
 import envConfig from '../config/env.config.js';
 // import webApi from '../webapi';
 import sBrowser from './browser.service.js';
 import Store from './storage.service.js';
-import { eSignal } from '../entities/global.enum.js';
+import { eSignal, eSignalExit } from '../entities/global.enum.js';
 import Scheduler from './scheduler.service.js';
 
 class App {
@@ -48,8 +48,8 @@ class App {
   }
 
   initSignal() {
-    process.on('SIGINT', () => process.exit());
-    process.on('SIGTERM', () => process.exit());
+    process.on('SIGINT', () => (process.emit as Function)(eSignalExit));
+    process.on('SIGTERM', () => (process.emit as Function)(eSignalExit));
 
     const store = Store.getStore();
     process.on(eSignal.PIDFILE, () => store.setSignalState(eSignal.PIDFILE));
