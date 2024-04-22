@@ -1,5 +1,5 @@
 import { openSync, writeSync, unlinkSync, closeSync } from 'fs';
-import { eSignal } from '../entities/global.enum.js';
+import { eSignal, eSignalExit } from '../entities/global.enum.js';
 
 class PID {
   path: string;
@@ -19,7 +19,7 @@ class PID {
   }
 
   removeOnExit() {
-    process.on('exit', () => this.remove(this.path));
+    process.on(eSignalExit, () => this.remove(this.path));
   }
 }
 
