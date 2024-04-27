@@ -1,16 +1,11 @@
 import path from 'path';
-import {
-  closeSync,
-  constants,
-  existsSync,
-  openSync,
-  readFileSync,
-  writeFileSync,
-  writeSync,
-} from 'fs';
+import { existsSync, readFileSync, writeFileSync } from 'fs';
 import IGlobalData from './ientities/iglobal-data.entity.js';
 import envConfig from '../config/env.config.js';
 import { eSignal, eSignalExit } from './global.enum.js';
+import ITaskId from './ientities/itask-id.entity.js';
+import { simpleHash } from '../utils/simpleHash.js';
+import Tasks from '../../tasks/index.js';
 
 class GlobalData implements IGlobalData {
   private defaultGlobalSaveFile: string = path.join(
@@ -18,7 +13,7 @@ class GlobalData implements IGlobalData {
     'global_data.sophon'
   );
 
-  taskIdList: string[] = [];
+  taskIdList: ITaskId[] = [];
 
   constructor() {
     process.on(eSignalExit, () => this.save());
@@ -51,6 +46,17 @@ class GlobalData implements IGlobalData {
 
     writeFileSync(filePath, JSON.stringify(tmpToSave), { flag: 'w+' });
     (process.emit as Function)(eSignal.GLOBALSAVEFILE);
+  }
+
+  updateGlobalTaskId(): void {
+    Tasks.forEach((_task) => {
+      const name = (_task as any).taskName;
+      const id = simpleHash(name);
+      const exist = this.taskIdList.find((item) => item.id === id);
+      if (exist === undefined) {
+        this.taskIdList.push({ id, name });
+      }
+    });
   }
 }
 

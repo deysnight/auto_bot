@@ -27,6 +27,7 @@ class Store {
 
     this.globalData.load();
     this.tasksData.load();
+    this.globalData.updateGlobalTaskId();
     this.tasksData.updateTasksMap();
   }
 

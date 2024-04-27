@@ -1,8 +1,11 @@
+import ITaskId from './itask-id.entity';
+
 interface IGlobalData {
-  taskIdList: string[];
+  taskIdList: ITaskId[];
 
   load(): void;
   save(): void;
+  updateGlobalTaskId(): void;
 }
 
 export default IGlobalData;
