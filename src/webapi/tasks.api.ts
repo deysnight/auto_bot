@@ -1,6 +1,7 @@
 import { Application, Request, Response } from 'express';
 import Store from '../services/storage.service.js';
 import { error } from 'console';
+import ISummaryTask from 'src/entities/dtos/taskSummary.dto.js';
 
 class TaskApi {
   protected route: string;
@@ -18,7 +19,7 @@ class TaskApi {
 
   async getAll(req: Request, res: Response) {
     try {
-      const result = { tasks: [] as any[] };
+      const result = { tasks: [] as ISummaryTask[] };
       const store = Store.getStore();
       const task = store.getAllTaskConfigData();
 
