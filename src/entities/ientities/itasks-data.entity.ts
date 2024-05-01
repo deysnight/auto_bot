@@ -13,6 +13,7 @@ interface ITasksData {
   updateTasksMap(): void;
   getTaskConfigData(taskName: string): TaskConfigData | undefined;
   addTaskConfigData(newTaskConfigData: TaskConfigData): void;
+  getAllTaskConfigData(): TaskConfigData[];
   getEnabledTask(): TaskConfigData[];
   getTaskConstructor(id: string): Type<Task>;
   getTaskDelay(id: string): IDelay;

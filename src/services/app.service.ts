@@ -3,7 +3,7 @@ import express, { Application } from 'express';
 import npid from './pid.service.js';
 import expressConfig from '../config/express.config.js';
 import envConfig from '../config/env.config.js';
-// import webApi from '../webapi';
+import webApi from '../webapi/index.js';
 import sBrowser from './browser.service.js';
 import Store from './storage.service.js';
 import { eSignal, eSignalExit } from '../entities/global.enum.js';
@@ -42,9 +42,9 @@ class App {
       )
     );
 
-    // Object.values(webApi).forEach((WebApi) => {
-    //   new WebApi(this.expressApp);
-    // });
+    Object.values(webApi).forEach((WebApi) => {
+      new WebApi(this.expressApp);
+    });
   }
 
   initSignal() {

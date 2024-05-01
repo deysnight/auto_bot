@@ -67,6 +67,10 @@ class Scheduler {
     );
   }
 
+  getQueuedTaskExecTime(taskId: string): ITaskQueueItem | undefined {
+    return this.taskQueue.find((item) => item.id === taskId);
+  }
+
   startMainLoop() {
     if (this.mainState !== eMainState.NONE) {
       return;

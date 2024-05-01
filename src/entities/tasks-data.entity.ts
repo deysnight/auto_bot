@@ -54,6 +54,10 @@ class TasksData implements ITasksData {
     (process.emit as Function)(eSignal.TASKSSAVEFILE);
   }
 
+  getAllTaskConfigData(): TaskConfigData[] {
+    return this.taskConfigData;
+  }
+
   getTaskConfigData(taskName: string): TaskConfigData | undefined {
     const currentTask = this.taskConfigData.filter(
       (item) => item.name === taskName

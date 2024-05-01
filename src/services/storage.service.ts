@@ -54,6 +54,10 @@ class Store {
     return this.refBrowser;
   }
 
+  getAllTaskConfigData(): TaskConfigData[] {
+    return this.tasksData.getAllTaskConfigData();
+  }
+
   getEnabledTask(): TaskConfigData[] {
     return this.tasksData.getEnabledTask();
   }
