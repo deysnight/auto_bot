@@ -1,10 +1,11 @@
 import { cronToTimestamp } from '../utils/cronTimestamp.js';
 import ITaskQueueItem from '../entities/ientities/itask-queue-item.entity.js';
 import Store from './storage.service.js';
-import { eMainState } from '../entities/global.enum.js';
+import { eMainState, eUpdateTaskEventWS } from '../entities/global.enum.js';
 import envConfig from '../config/env.config.js';
 import ITask from '../entities/ientities/itask.entity.js';
-import { eStatsLabel } from '../entities/ientities/istats.entity.js';
+import { eStatsLabel } from '../entities/global.enum.js';
+import WSS from './socket.service.js';
 
 class Scheduler {
   taskQueue: ITaskQueueItem[] = [];
@@ -21,7 +22,7 @@ class Scheduler {
     this.updateTaskQueue();
   }
 
-  updateTaskQueue() {
+  updateTaskQueue(previousTaskId?: string) {
     const localStore = Store.getStore();
     const enabledTasks = localStore.getEnabledTask();
     enabledTasks.forEach((enabledTask) => {
@@ -40,6 +41,22 @@ class Scheduler {
       (a, b) =>
         a.execTime.getTime() - b.execTime.getTime() || b.priority - a.priority
     );
+
+    if (this.taskQueue.length) {
+      const wss = WSS.getWS();
+
+      if (previousTaskId) {
+        wss.emitUpdateTaskStatus(
+          previousTaskId,
+          eUpdateTaskEventWS.taskNextExec,
+          this.getQueuedTaskExecTime(previousTaskId)?.execTime
+        );
+      }
+      wss.emitUpdateTaskStatus(
+        this.taskQueue[0].id,
+        eUpdateTaskEventWS.nextTask
+      );
+    }
 
     console.log(
       this.taskQueue.map((item) => {
@@ -114,6 +131,20 @@ class Scheduler {
     );
     this.currentTaskInstance = new taskConstructor();
     this.startExecutionTime = new Date();
+
+    const wss = WSS.getWS();
+    wss.emitUpdateTaskStatus(
+      this.getCurrentTask().id,
+      eUpdateTaskEventWS.startTask,
+      this.startExecutionTime
+    );
+    if (this.taskQueue.length > 1) {
+      wss.emitUpdateTaskStatus(
+        this.taskQueue[1].id,
+        eUpdateTaskEventWS.nextTask
+      );
+    }
+
     this.changeState(eMainState.WAITINGDELAY);
   }
 
@@ -142,7 +173,14 @@ class Scheduler {
     store.setTaskStats(id, eStatsLabel.lastExecution, endExecutionTime);
 
     this.removeCurrentTask();
-    this.updateTaskQueue();
+    this.updateTaskQueue(id);
+
+    WSS.getWS().emitUpdateTaskStatus(
+      id,
+      eUpdateTaskEventWS.endTask,
+      this.startExecutionTime
+    );
+
     this.changeState(eMainState.IDLE);
   }
 
