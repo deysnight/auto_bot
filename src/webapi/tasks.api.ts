@@ -7,7 +7,7 @@ class TaskApi {
   protected route: string;
 
   constructor(app: Application) {
-    this.route = 'tasks';
+    this.route = 'api/tasks';
     this.initRoutes(app);
   }
 
@@ -19,7 +19,7 @@ class TaskApi {
 
   async getAll(req: Request, res: Response) {
     try {
-      const result = { tasks: [] as ISummaryTask[] };
+      const result: ISummaryTask[] = [];
       const store = Store.getStore();
       const task = store.getAllTaskConfigData();
 
@@ -28,7 +28,7 @@ class TaskApi {
         const execTime = store
           .getRefScheduler()
           .getQueuedTaskExecTime(id)?.execTime;
-        result.tasks.push({
+        result.push({
           id,
           name,
           enabled,

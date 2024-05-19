@@ -8,9 +8,13 @@ import sBrowser from './browser.service.js';
 import Store from './storage.service.js';
 import { eSignal, eSignalExit } from '../entities/global.enum.js';
 import Scheduler from './scheduler.service.js';
+import { Server } from 'socket.io';
+import http from 'http';
+import WSS from './socket.service.js';
 
 class App {
   expressApp: Application;
+  serverApp!: http.Server;
 
   constructor() {
     Store.getStore();
@@ -27,7 +31,11 @@ class App {
       console.log(err);
       process.exit(1);
     }
-    this.expressApp = expressConfig(this.expressApp);
+    this.serverApp = expressConfig(this.expressApp);
+    const ioServer = this.expressApp.get('io') as Server;
+    const tmpWS = WSS.getWS();
+    tmpWS.setIO(ioServer);
+
     const tmpStore = Store.getStore();
     const tmpBrowser = new sBrowser();
     tmpStore.setRefBrowser(tmpBrowser);
@@ -36,7 +44,8 @@ class App {
     tmpStore.setRefScheduler(tmpScheduler);
     tmpScheduler.init();
     tmpScheduler.autoMainLoop();
-    this.expressApp.listen(envConfig.api.port, () =>
+
+    this.serverApp.listen(envConfig.api.port, () =>
       console.log(
         `[Server] ${envConfig.appName} listening on port ${envConfig.api.port} in ${envConfig.env} mode`
       )

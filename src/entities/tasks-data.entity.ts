@@ -9,7 +9,7 @@ import Tasks from '../../tasks/index.js';
 import { simpleHash } from '../utils/simpleHash.js';
 import Task, { Type } from './task.entity.js';
 import IDelay from './ientities/idelay.entity.js';
-import { eStatsLabel } from './ientities/istats.entity.js';
+import { eStatsLabel } from './global.enum.js';
 
 class TasksData implements ITasksData {
   private defaultTasksSaveFile: string = path.join(

@@ -2,7 +2,7 @@ import TaskConfigData from '../task-config-data.entity.js';
 import TaskInternalData from '../task-internal-data.entity.js';
 import Task, { Type } from '../task.entity.js';
 import IDelay from './idelay.entity.js';
-import { eStatsLabel } from './istats.entity.js';
+import { eStatsLabel } from '../global.enum';
 
 interface ITasksData {
   taskConfigData: TaskConfigData[];

@@ -32,3 +32,11 @@ export enum eStatsLabel {
   averageExecutionTime,
   lastExecution,
 }
+
+export enum eUpdateTaskEventWS {
+  none = 0,
+  startTask,
+  endTask,
+  taskNextExec,
+  nextTask,
+}

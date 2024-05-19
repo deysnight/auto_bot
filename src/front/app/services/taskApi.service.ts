@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import ISummaryTask from '../../../entities/dtos/taskSummary.dto';
+import ISummaryTask from '../../../entities/dtos/taskSummary.dto.js';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ export class TaskApiService {
 
   constructor(http: HttpClient) {
     this.http = http;
-    this.endpoint = 'tasks';
+    this.endpoint = 'api/tasks';
   }
 
   get(): Observable<ISummaryTask[]> {

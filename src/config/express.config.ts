@@ -1,9 +1,11 @@
 import express, { Application } from 'express';
+import { createServer } from 'http';
 import path from 'path';
+import { Server } from 'socket.io';
 
 export default function (expressApp: Application) {
   const __dirname = path.resolve();
-  const frontFolder = path.join(__dirname, 'src/front');
+  const frontFolder = path.join(__dirname, 'build/front');
 
   expressApp.use(express.json());
   expressApp.use(express.urlencoded());
@@ -19,6 +21,8 @@ export default function (expressApp: Application) {
       'Origin, X-Requested-With, X-Correlation-ID, Content-Type, Accept'
     );
 
+    res.header('Access-Control-Allow-Origin', '*');
+
     if (req.method === 'OPTIONS') {
       return res.sendStatus(200).end();
     }
@@ -26,5 +30,9 @@ export default function (expressApp: Application) {
     return next();
   });
 
-  return expressApp;
+  const server = createServer(expressApp);
+  const io = new Server(server);
+  expressApp.set('io', io);
+
+  return server;
 }
