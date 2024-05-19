@@ -26,3 +26,9 @@ export enum eMainState {
   TASKEXEC, // run main task function
   TASKEND, // run end task function
 }
+
+export enum eStatsLabel {
+  executionCount = 0,
+  averageExecutionTime,
+  lastExecution,
+}
