@@ -1,0 +1,31 @@
+<div class="main-container">
+  <div class="title-content">{{ name }}</div>
+  <div class="main-content">
+    <div class="time-info-content">
+      <span>{{ cronString }}</span>
+      <span>{{ nextExecString }}</span>
+    </div>
+    <div class="chips-info-content">
+      <mat-chip-set aria-label="Fish selection">
+        <mat-chip *ngIf="chipIsNext">Next task to execute</mat-chip>
+        <mat-chip class="running-chip" *ngIf="chipIsRunning"
+          >Currently running</mat-chip
+        >
+        <mat-chip *ngIf="chipIsLast">Last executed task</mat-chip>
+        <mat-chip class="conf-required" *ngIf="chipConfigRequire"
+          >Configuration required</mat-chip
+        >
+      </mat-chip-set>
+    </div>
+  </div>
+  <div class="action-content">
+    <button mat-mini-fab aria-label="">
+      <mat-icon>settings</mat-icon>
+    </button>
+    <mat-slide-toggle
+      [checked]="enabled"
+      [disabled]="chipConfigRequire"
+      (change)="toggleTask($event)"
+    ></mat-slide-toggle>
+  </div>
+</div>

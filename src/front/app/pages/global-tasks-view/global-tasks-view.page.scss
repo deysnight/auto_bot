@@ -1,0 +1,22 @@
+.main-content {
+  width: 100%;
+  height: 100%;
+}
+
+.panel-group {
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // padding-top: 2%;
+
+  width: 80%;
+  height: 100%;
+  margin: 0 auto;
+  padding-top: 2%;
+}
+
+mat-accordion {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}

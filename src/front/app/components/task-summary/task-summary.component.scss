@@ -1,0 +1,80 @@
+@import "../../../common.scss";
+
+.main-container {
+  border: 3px solid $ab-primary;
+  border-radius: 8px;
+  height: 56px;
+  padding: 5px;
+  transition: background 0.3s ease;
+  background: $ab-backgroundAlter;
+
+  display: flex;
+  /* flex-direction: row; */
+  justify-content: space-between;
+  align-items: center;
+
+  .title-content {
+    width: 20%;
+  }
+
+  .main-content {
+    width: 60%;
+    display: flex;
+
+    .time-info-content {
+      width: 55%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .chips-info-content {
+      .running-chip {
+        --mdc-chip-outline-color: #{$ab-success} !important;
+      }
+
+      .conf-required {
+        --mdc-chip-outline-color: #{$ab-error} !important;
+      }
+
+      .mat-mdc-standard-chip {
+        --mdc-chip-label-text-color: #{$ab-text};
+        --mdc-chip-outline-color: #{$ab-primary};
+      }
+    }
+  }
+
+  .action-content {
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+    button {
+      border-radius: 999px;
+      background-color: $ab-accent;
+      color: $ab-text;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: $ab-primary;
+    }
+  }
+}
+
+.main-container:hover {
+  background: $ab-ambianceAlter;
+}
+
+::ng-deep
+  .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked:not(.mat-disabled)
+  .mdc-switch__shadow {
+  background-color: $ab-text;
+}
+
+::ng-deep
+  .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked:not(.mat-disabled)
+  .mdc-switch__track::after {
+  background-color: $ab-accent !important;
+}
