@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import cronstrue from 'cronstrue';
-import ISummaryTask from '../../../../entities/dtos/taskSummary.dto';
+import ISummaryTask from '../../../../entities/dtos/taskSummary.dto.js';
 import { WebSocketService } from '../../services/web-socket.service';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import IUpdateTaskMessageWS from '../../../../entities/dtos/taskUpdateWS.dto';
 import { eUpdateTaskEventWS } from '../../../../entities/global.enum';
 import timestampToDate from '../../../../utils/timestampToTime';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-task-summary',
@@ -26,7 +27,10 @@ export class TaskSummaryComponent implements OnInit {
   chipIsLast: boolean = false;
   chipIsRunning: boolean = false;
 
-  constructor(private webSocketService: WebSocketService) {}
+  constructor(
+    private router: Router,
+    private webSocketService: WebSocketService
+  ) {}
 
   ngOnInit() {
     const { id, name, cron, enabled, execTime } = this.taskSummary;
@@ -45,6 +49,10 @@ export class TaskSummaryComponent implements OnInit {
     }
 
     this.webSocketService.subscribeToUpdate(this.processMessage.bind(this));
+  }
+
+  goToSettings() {
+    this.router.navigateByUrl(`/task/${this.id}`);
   }
 
   processMessage(err: null, msg: IUpdateTaskMessageWS) {

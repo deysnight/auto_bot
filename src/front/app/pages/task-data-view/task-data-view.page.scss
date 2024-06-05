@@ -1,0 +1,147 @@
+@import "../../../common.scss";
+
+.main-content {
+  width: 100%;
+  height: 100%;
+
+  .tittle {
+    display: flex;
+    justify-content: center;
+    padding-top: 2%;
+  }
+}
+
+.panel-group {
+  width: 60%;
+  height: 100%;
+  margin: 0 auto;
+  //   padding-top: 2%;
+}
+
+.panel {
+  border: 3px solid $ab-primary;
+  border-radius: 8px;
+  // height: 56px;
+  padding: 0 40px 5px 40px;
+  //   transition: background 0.3s ease;
+  background: $ab-backgroundAlter;
+  margin-top: 8px;
+
+  //   display: flex;
+  //   justify-content: space-between;
+  //   align-items: center;
+
+  h2 {
+    color: $ab-accent;
+    text-decoration: underline;
+    margin-left: -15px;
+  }
+
+  .right-spacer {
+    margin-right: 25px;
+  }
+
+  .reset-button {
+    color: $ab-text;
+    background-color: $ab-error;
+  }
+
+  .set-button {
+    color: $ab-text;
+    background-color: $ab-primary;
+  }
+
+  .priority {
+    .mat-button-toggle {
+      background-color: $ab-ambiance;
+      color: $ab-text;
+    }
+
+    .mat-button-toggle:hover {
+      background-color: $ab-primary;
+      color: $ab-text !important;
+    }
+
+    .mat-button-toggle-checked {
+      background-color: $ab-accent;
+      color: $ab-text !important;
+    }
+  }
+
+  mat-label {
+    color: $ab-text;
+  }
+
+  input {
+    color: $ab-text;
+  }
+
+  ::ng-deep .mdc-notched-outline > * {
+    border-color: $ab-accent !important;
+  }
+  ::ng-deep .mdc-text-field--focused .mdc-notched-outline > * {
+    border-color: $ab-primary !important;
+  }
+
+  mat-form-field {
+    margin-bottom: -20px;
+    --mat-form-field-container-height: 2rem;
+    // --mat-form-field-container-vertical-padding: 0.25rem;
+    // --mat-form-field-container-text-size: 12px;
+  }
+}
+
+.submit-area {
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  button {
+    width: 300px;
+  }
+
+  .button-cancel {
+    color: $ab-text;
+    background-color: $ab-accent;
+  }
+
+  .button-save {
+    color: $ab-text;
+    background-color: $ab-primary;
+  }
+}
+
+.subpart {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+
+  .task-delay-input {
+    width: 100px;
+  }
+
+  .task-stats-output {
+    width: 140px;
+  }
+
+  .subpart-tittle {
+    width: 20%;
+  }
+
+  .mat-mdc-form-field-bottom-align::before {
+    height: 12px;
+  }
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+  height: 40px !important;
+}
+::ng-deep .mat-mdc-form-field-flex {
+  margin-top: -7px !important;
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  line-height: 0.6rem !important;
+  font-size: 0.6rem !important;
+}

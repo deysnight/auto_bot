@@ -1,0 +1,132 @@
+<div class="main-content">
+  <div class="tittle">
+    <h1>Task Settings</h1>
+  </div>
+  <div class="panel-group">
+    <div class="panel">
+      <h2>Execution Parameters</h2>
+
+      <div class="taskname subpart">
+        <span class="subpart-tittle">Name</span>
+        <span>taskNamePlaceholder</span>
+      </div>
+      <div class="taskid subpart">
+        <span class="subpart-tittle">Identifier</span>
+        <span>taskIdPlaceholder</span>
+      </div>
+      <div class="taskcron subpart">
+        <span class="subpart-tittle">Cron Schedule</span>
+        <mat-form-field appearance="outline">
+          <mat-label>Cron string</mat-label>
+          <input matInput placeholder="* * * * * *" value="" />
+        </mat-form-field>
+      </div>
+      <div class="taskdelay subpart">
+        <span class="subpart-tittle">Execution Delay</span>
+        <div>
+          <mat-slide-toggle class="right-spacer"></mat-slide-toggle>
+          <mat-form-field
+            class="task-delay-input right-spacer"
+            appearance="outline"
+          >
+            <mat-label>Min</mat-label>
+            <input matInput type="number" value="" />
+            <mat-hint>In seconde</mat-hint>
+          </mat-form-field>
+          <mat-form-field
+            class="task-delay-input right-spacer"
+            appearance="outline"
+          >
+            <mat-label>Max</mat-label>
+            <input matInput type="number" value="" />
+            <mat-hint>In seconde</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="priority subpart">
+        <span class="subpart-tittle">Priority</span>
+        <mat-button-toggle-group name="priority" aria-label="priority">
+          <mat-button-toggle value="LOWEST">Lowest</mat-button-toggle>
+          <mat-button-toggle value="LOW">Low</mat-button-toggle>
+          <mat-button-toggle value="NORMAL">Normal</mat-button-toggle>
+          <mat-button-toggle value="HIGH">High</mat-button-toggle>
+          <mat-button-toggle value="HIGHEST">Highest</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Statistics</h2>
+      <div class="stats-exec-count subpart">
+        <span class="subpart-tittle">Execution Count</span>
+        <mat-form-field
+          class="task-stats-output right-spacer"
+          appearance="outline"
+        >
+          <input matInput disabled type="number" value="" />
+        </mat-form-field>
+        <button class="reset-button" mat-flat-button (click)="null">
+          Reset
+        </button>
+      </div>
+
+      <div class="stats-avg-time subpart">
+        <span class="subpart-tittle">Average Execution Time</span>
+        <mat-form-field
+          class="task-stats-output right-spacer"
+          appearance="outline"
+        >
+          <input matInput disabled type="number" value="" />
+        </mat-form-field>
+        <button class="reset-button" mat-flat-button (click)="null">
+          Reset
+        </button>
+      </div>
+
+      <div class="stats-exec-date subpart">
+        <span class="subpart-tittle">Last Execution Date</span>
+        <mat-form-field
+          class="task-stats-output right-spacer"
+          appearance="outline"
+        >
+          <input matInput disabled type="number" value="" />
+        </mat-form-field>
+        <button class="reset-button" mat-flat-button (click)="null">
+          Reset
+        </button>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Custom Internal Variables</h2>
+      <div class="subpart" *ngFor="let t of tmp">
+        <!-- <p>name - value - button [set reset delete]</p> -->
+        <span class="subpart-tittle">Identifier</span>
+        <mat-form-field
+          class="task-internal-var-output right-spacer"
+          appearance="outline"
+        >
+          <input matInput disabled value="" />
+        </mat-form-field>
+        <button class="set-button right-spacer" mat-flat-button (click)="null">
+          Edit
+        </button>
+        <button
+          class="reset-button right-spacer"
+          mat-flat-button
+          (click)="null"
+        >
+          Reset
+        </button>
+        <button class="reset-button" mat-flat-button (click)="null">
+          Delete
+        </button>
+      </div>
+    </div>
+    <div class="panel submit-area">
+      <button class="button-cancel" mat-flat-button (click)="null">
+        Cancel
+      </button>
+      <button class="button-save" mat-flat-button (click)="null">Save</button>
+    </div>
+  </div>
+</div>
