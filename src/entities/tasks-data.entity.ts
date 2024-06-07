@@ -4,7 +4,7 @@ import TaskConfigData from './task-config-data.entity.js';
 import TaskInternalData from './task-internal-data.entity.js';
 import envConfig from '../config/env.config.js';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
-import { eSignal, eSignalExit } from './global.enum.js';
+import { ePriority, eSignal, eSignalExit } from './global.enum.js';
 import Tasks from '../../tasks/index.js';
 import { simpleHash } from '../utils/simpleHash.js';
 import Task, { Type } from './task.entity.js';
@@ -88,6 +88,21 @@ class TasksData implements ITasksData {
   getTaskDelay(id: string): IDelay {
     const task = this.taskConfigData.find((item) => item.id === id);
     return task!.delay;
+  }
+
+  getTaskName(id: string): string {
+    const task = this.taskConfigData.find((item) => item.id === id);
+    return task!.name;
+  }
+
+  getTaskCron(id: string): string {
+    const task = this.taskConfigData.find((item) => item.id === id);
+    return task!.cron;
+  }
+
+  getTaskPriority(id: string): ePriority {
+    const task = this.taskConfigData.find((item) => item.id === id);
+    return task!.priority;
   }
 
   getTaskStats(id: string, varName: eStatsLabel): number | Date {

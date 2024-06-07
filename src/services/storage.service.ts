@@ -1,6 +1,6 @@
 import GlobalData from '../entities/global-data.entity.js';
 import TasksData from '../entities/tasks-data.entity.js';
-import { eSignal } from '../entities/global.enum.js';
+import { ePriority, eSignal } from '../entities/global.enum.js';
 import Scheduler from './scheduler.service.js';
 import sBrowser from './browser.service.js';
 import TaskConfigData from '../entities/task-config-data.entity.js';
@@ -46,7 +46,7 @@ class Store {
     return this.refScheduler;
   }
 
-  setRefBrowser(ref: sBrowser) {
+  setRefBrowser(ref: sBrowser): void {
     this.refBrowser = ref;
   }
 
@@ -64,6 +64,18 @@ class Store {
 
   getTaskConstructor(id: string): Type<Task> {
     return this.tasksData.getTaskConstructor(id);
+  }
+
+  getTaskName(id: string): string {
+    return this.tasksData.getTaskName(id);
+  }
+
+  getTaskCron(id: string): string {
+    return this.tasksData.getTaskCron(id);
+  }
+
+  getTaskPriority(id: string): ePriority {
+    return this.tasksData.getTaskPriority(id);
   }
 
   getTaskDelay(id: string): IDelay {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ePriority } from '../../../../entities/global.enum.js';
 
 @Component({
@@ -11,11 +11,15 @@ export class TaskDataViewPage implements OnInit {
   id: string;
   tmp: any[] = ['', '', ''];
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private router: Router, private route: ActivatedRoute) {
     this.id = this.route.snapshot.paramMap.get('id')!;
   }
 
   ngOnInit(): void {
     //get task details
+  }
+
+  goToHome() {
+    this.router.navigateByUrl(`/`);
   }
 }

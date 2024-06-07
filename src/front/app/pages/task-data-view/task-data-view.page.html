@@ -18,7 +18,7 @@
         <span class="subpart-tittle">Cron Schedule</span>
         <mat-form-field appearance="outline">
           <mat-label>Cron string</mat-label>
-          <input matInput placeholder="* * * * * *" value="" />
+          <input matInput value="" />
         </mat-form-field>
       </div>
       <div class="taskdelay subpart">
@@ -99,7 +99,6 @@
     <div class="panel">
       <h2>Custom Internal Variables</h2>
       <div class="subpart" *ngFor="let t of tmp">
-        <!-- <p>name - value - button [set reset delete]</p> -->
         <span class="subpart-tittle">Identifier</span>
         <mat-form-field
           class="task-internal-var-output right-spacer"
@@ -123,7 +122,7 @@
       </div>
     </div>
     <div class="panel submit-area">
-      <button class="button-cancel" mat-flat-button (click)="null">
+      <button class="button-cancel" mat-flat-button (click)="goToHome()">
         Cancel
       </button>
       <button class="button-save" mat-flat-button (click)="null">Save</button>

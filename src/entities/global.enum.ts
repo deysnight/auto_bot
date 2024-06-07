@@ -28,9 +28,9 @@ export enum eMainState {
 }
 
 export enum eStatsLabel {
-  executionCount = 0,
-  averageExecutionTime,
-  lastExecution,
+  executionCount = 'executionCount',
+  averageExecutionTime = 'averageExecutionTime',
+  lastExecution = 'lastExecution',
 }
 
 export enum eUpdateTaskEventWS {
