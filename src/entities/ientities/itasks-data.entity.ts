@@ -22,6 +22,7 @@ interface ITasksData {
   getTaskIntervalVarList(id: string): string[];
   getTaskInternalVar(id: string, varName: string): string | number | undefined;
   setTaskInternalVar(id: string, varName: string, value: string | number): void;
+  deleteTaskInternalVar(id: string, varName: string): void;
 }
 
 export default ITasksData;

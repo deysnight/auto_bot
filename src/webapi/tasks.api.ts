@@ -17,7 +17,8 @@ class TaskApi {
   protected initRoutes(app: Application) {
     app.get(`/${this.route}`, this.getAll.bind(this));
     app.get(`/${this.route}/:taskId`, this.getById.bind(this));
-    app.post(`/${this.route}`, this.update.bind(this));
+    app.post(`/${this.route}/:taskId`, this.update.bind(this));
+    app.delete(`/${this.route}/:taskId`, this.delete.bind(this));
   }
 
   async getAll(req: Request, res: Response) {
@@ -89,6 +90,15 @@ class TaskApi {
   }
 
   async update(req: Request, res: Response) {
+    throw error('Not implemented');
+    // try {
+    //   return res.status(200).json(result);
+    // } catch (e) {
+    //   return res.status(500).json({ msg: e.message, type: e.type });
+    // }
+  }
+
+  async delete(req: Request, res: Response) {
     throw error('Not implemented');
     // try {
     //   return res.status(200).json(result);

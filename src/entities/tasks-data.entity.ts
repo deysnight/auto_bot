@@ -140,6 +140,15 @@ class TasksData implements ITasksData {
     }
   }
 
+  deleteTaskInternalVar(id: string, varName: string): void {
+    const task = this.taskInternalData.find((item) => item.id === id)!;
+    const index = task!.internals.findIndex((item) => item.name === varName);
+
+    if (index !== -1) {
+      task.internals.splice(index, 1);
+    }
+  }
+
   updateTasksMap(): void {
     Tasks.forEach((_task) => {
       const wantedTaskName = (_task as any).taskName;

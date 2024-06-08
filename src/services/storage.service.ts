@@ -106,6 +106,10 @@ class Store {
     this.tasksData.setTaskInternalVar(id, varName, value);
   }
 
+  deleteTaskInternalVar(id: string, varName: string): void {
+    this.tasksData.deleteTaskInternalVar(id, varName);
+  }
+
   setSignalState(event: eSignal) {
     this.signalState[event] = true;
     console.log(`${event} sema released`);
