@@ -122,11 +122,19 @@
   }
 
   .task-stats-output {
-    width: 140px;
+    width: 250px;
+
+    span {
+      margin-right: 5px;
+    }
   }
 
   .subpart-tittle {
     width: 20%;
+  }
+
+  .subpart-complement {
+    margin-left: 10px;
   }
 
   .mat-mdc-form-field-bottom-align::before {
