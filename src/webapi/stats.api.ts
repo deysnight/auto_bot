@@ -1,5 +1,6 @@
 import { Application, Request, Response } from 'express';
 import Store from '../services/storage.service.js';
+import { eStatsLabel } from 'src/entities/global.enum.js';
 
 class StatApi {
   protected route: string;
@@ -10,13 +11,13 @@ class StatApi {
   }
 
   protected initRoutes(app: Application) {
-    app.post(`/${this.route}/:taskId`, this.updateFromTask.bind(this));
+    app.post(`/${this.route}/:taskId/reset`, this.reset.bind(this));
   }
 
-  async updateFromTask(req: Request, res: Response) {
+  async reset(req: Request, res: Response) {
     try {
       const { taskId } = req.params;
-      const statName = req.body.name;
+      const statName: eStatsLabel = req.body.name;
 
       const store = Store.getStore();
       store.setTaskStats(taskId, statName, 0);

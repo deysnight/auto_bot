@@ -33,7 +33,7 @@ class InternalVarApi {
   async reset(req: Request, res: Response) {
     try {
       const { taskId } = req.params;
-      const taskName = req.body.name;
+      const taskName: string = req.body.name;
 
       const store = Store.getStore();
       store.setTaskInternalVar(taskId, taskName, '');

@@ -5,6 +5,7 @@ import ISummaryTask from '../entities/dtos/taskSummary.dto.js';
 import ITaskFull from '../entities/dtos/taskFull.dto.js';
 import { eStatsLabel } from '../entities/global.enum.js';
 import ITaskCustomVar from '../entities/ientities/icustomvar.entity.js';
+import ITaskCore from '../entities/dtos/taskCore.dto.js';
 
 class TaskApi {
   protected route: string;
@@ -18,7 +19,7 @@ class TaskApi {
     app.get(`/${this.route}`, this.getAll.bind(this));
     app.get(`/${this.route}/:taskId`, this.getById.bind(this));
     app.post(`/${this.route}/:taskId`, this.update.bind(this));
-    app.delete(`/${this.route}/:taskId`, this.delete.bind(this));
+    app.post(`/${this.route}/:taskId/state`, this.enable.bind(this));
   }
 
   async getAll(req: Request, res: Response) {
@@ -90,21 +91,36 @@ class TaskApi {
   }
 
   async update(req: Request, res: Response) {
-    throw error('Not implemented');
-    // try {
-    //   return res.status(200).json(result);
-    // } catch (e) {
-    //   return res.status(500).json({ msg: e.message, type: e.type });
-    // }
+    try {
+      const { taskId } = req.params;
+      const { cron, delay, priority } = req.body;
+
+      const store = Store.getStore();
+      store.setTaskCron(taskId, cron);
+      store.setTaskDelay(taskId, delay);
+      store.setTaskPriority(taskId, priority);
+
+      store.getRefScheduler().onTaskSettingsUpdate(taskId);
+
+      return res.status(200).json({ success: true });
+    } catch (e: unknown) {
+      return res.status(500).json({ msg: (e as Error).message });
+    }
   }
 
-  async delete(req: Request, res: Response) {
-    throw error('Not implemented');
-    // try {
-    //   return res.status(200).json(result);
-    // } catch (e) {
-    //   return res.status(500).json({ msg: e.message, type: e.type });
-    // }
+  async enable(req: Request, res: Response) {
+    try {
+      const { taskId } = req.params;
+      const { state } = req.body;
+
+      const store = Store.getStore();
+      store.setTaskEnabled(taskId, state);
+      store.getRefScheduler().onTaskEnable(taskId);
+
+      return res.status(200).json({ success: true });
+    } catch (e: unknown) {
+      return res.status(500).json({ msg: (e as Error).message });
+    }
   }
 }
 
