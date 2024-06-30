@@ -1,7 +1,9 @@
+import { eStatsLabel } from '../global.enum';
+
 interface ITaskStats {
-  executionCount: number;
-  averageExecutionTime: number;
-  lastExecution: Date;
+  [eStatsLabel.executionCount]: number;
+  [eStatsLabel.averageExecutionTime]: number;
+  [eStatsLabel.lastExecution]: Date;
 }
 
 export default ITaskStats;
