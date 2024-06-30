@@ -80,6 +80,11 @@ class TasksData implements ITasksData {
     return this.taskConfigData.filter((item) => item.enabled === true);
   }
 
+  setTaskEnabled(id: string, newState: boolean): void {
+    const index = this.taskConfigData.findIndex((item) => item.id === id);
+    this.taskConfigData[index].enabled = newState;
+  }
+
   getTaskConstructor(id: string): Type<Task> {
     const task = this.taskConfigData.find((item) => item.id === id);
     return task!.handle;
@@ -88,6 +93,13 @@ class TasksData implements ITasksData {
   getTaskDelay(id: string): IDelay {
     const task = this.taskConfigData.find((item) => item.id === id);
     return task!.delay;
+  }
+
+  setTaskDelay(id: string, newDelay: IDelay): void {
+    const index = this.taskConfigData.findIndex((item) => item.id === id);
+    this.taskConfigData[index].delay.enabled = newDelay.enabled;
+    this.taskConfigData[index].delay.minDelay = newDelay.minDelay;
+    this.taskConfigData[index].delay.maxDelay = newDelay.maxDelay;
   }
 
   getTaskName(id: string): string {
@@ -100,9 +112,19 @@ class TasksData implements ITasksData {
     return task!.cron;
   }
 
+  setTaskCron(id: string, newCron: string): void {
+    const index = this.taskConfigData.findIndex((item) => item.id === id);
+    this.taskConfigData[index].cron = newCron;
+  }
+
   getTaskPriority(id: string): ePriority {
     const task = this.taskConfigData.find((item) => item.id === id);
     return task!.priority;
+  }
+
+  setTaskPriority(id: string, newPriority: ePriority): void {
+    const index = this.taskConfigData.findIndex((item) => item.id === id);
+    this.taskConfigData[index].priority = newPriority;
   }
 
   getTaskStats(id: string, varName: eStatsLabel): number | Date {
