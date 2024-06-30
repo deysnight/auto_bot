@@ -62,6 +62,10 @@ class Store {
     return this.tasksData.getEnabledTask();
   }
 
+  setTaskEnabled(id: string, newState: boolean): void {
+    this.tasksData.setTaskEnabled(id, newState);
+  }
+
   getTaskConstructor(id: string): Type<Task> {
     return this.tasksData.getTaskConstructor(id);
   }
@@ -74,12 +78,24 @@ class Store {
     return this.tasksData.getTaskCron(id);
   }
 
+  setTaskCron(id: string, newCron: string): void {
+    this.tasksData.setTaskCron(id, newCron);
+  }
+
   getTaskPriority(id: string): ePriority {
     return this.tasksData.getTaskPriority(id);
   }
 
+  setTaskPriority(id: string, newPriority: ePriority): void {
+    this.tasksData.setTaskPriority(id, newPriority);
+  }
+
   getTaskDelay(id: string): IDelay {
     return this.tasksData.getTaskDelay(id);
+  }
+
+  setTaskDelay(id: string, newDelay: IDelay): void {
+    this.tasksData.setTaskDelay(id, newDelay);
   }
 
   getTaskStats(id: string, varName: eStatsLabel): number | Date {

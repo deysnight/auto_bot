@@ -69,6 +69,33 @@ class Scheduler {
     );
   }
 
+  onTaskSettingsUpdate(id: string) {
+    const curr = this.getCurrentTask();
+    if (!curr || curr.id === id) {
+      return;
+    }
+
+    const res = this.removeTaskById(id);
+    if (res !== true) this.updateTaskQueue();
+  }
+
+  onTaskEnable(id: string) {
+    const curr = this.getCurrentTask();
+    if ((!curr || curr.id === id) && this.mainState !== eMainState.IDLE) {
+      return;
+    }
+
+    this.removeTaskById(id);
+    this.updateTaskQueue();
+  }
+
+  removeTaskById(id: string): boolean {
+    const index = this.taskQueue.findIndex((item) => item.id === id);
+    if (index === -1) return false;
+    this.taskQueue.splice(index, 1);
+    return true;
+  }
+
   getCurrentTask(): ITaskQueueItem {
     return this.taskQueue.at(0)!;
   }
@@ -120,7 +147,10 @@ class Scheduler {
   }
 
   async processStateIdle() {
-    if (this.getCurrentTask().execTime.getTime() <= Date.now()) {
+    if (
+      this.getCurrentTask() &&
+      this.getCurrentTask().execTime.getTime() <= Date.now()
+    ) {
       this.changeState(eMainState.INIT);
     }
   }
@@ -224,7 +254,7 @@ class Scheduler {
 
   async stateMachine() {
     try {
-      if (this.taskQueue.length === 0) return;
+      // if (this.taskQueue.length === 0) return;
 
       switch (this.mainState) {
         case eMainState.IDLE:
