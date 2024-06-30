@@ -7,6 +7,8 @@ import IUpdateTaskMessageWS from '../../../../entities/dtos/taskUpdateWS.dto';
 import { eUpdateTaskEventWS } from '../../../../entities/global.enum';
 import timestampToDate from '../../../../utils/timestampToTime';
 import { Router } from '@angular/router';
+import ISuccessReturn from '../../../../entities/dtos/successReturn.dto.js';
+import { TaskApiService } from '../../services/taskApi.service';
 
 @Component({
   selector: 'app-task-summary',
@@ -29,7 +31,8 @@ export class TaskSummaryComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private webSocketService: WebSocketService
+    private webSocketService: WebSocketService,
+    private taskApiService: TaskApiService
   ) {}
 
   ngOnInit() {
@@ -82,11 +85,11 @@ export class TaskSummaryComponent implements OnInit {
   }
 
   toggleTask(event: MatSlideToggleChange) {
-    console.log('toggle', event.checked);
     this.enabled = event.checked;
-    //make request to toggle task
-    // if request fail
-    // restore previous slide state
+
+    this.taskApiService.enable(this.id, this.enabled).subscribe({
+      next: (res: ISuccessReturn) => {},
+    });
   }
 
   buildNextExecString() {

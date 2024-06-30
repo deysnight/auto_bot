@@ -14,74 +14,102 @@
         <span class="subpart-tittle">Identifier</span>
         <span>{{taskFull.id}}</span>
       </div>
-      <div class="taskcron subpart">
-        <span class="subpart-tittle">Cron Schedule</span>
-        <mat-form-field appearance="outline">
-          <mat-label>Cron string</mat-label>
-          <input
-            matInput
-            [value]="taskFull.cron"
-            (input)="updateCronPreview($event)"
-          />
-        </mat-form-field>
-        <span class="subpart-complement">{{cronString}}</span>
-      </div>
-      <div class="taskdelay subpart">
-        <span class="subpart-tittle">Execution Delay</span>
-        <div>
-          <mat-slide-toggle
-            class="right-spacer"
-            [checked]="taskFull.delay.enabled"
-          ></mat-slide-toggle>
-          <mat-form-field
-            class="task-delay-input right-spacer"
-            appearance="outline"
-          >
-            <mat-label>Min</mat-label>
-            <input
-              matInput
-              type="number"
-              [disabled]="!taskFull.delay.enabled"
-              [value]="taskFull.delay.minDelay"
-            />
-            <mat-hint>In seconde</mat-hint>
-          </mat-form-field>
-          <mat-form-field
-            class="task-delay-input right-spacer"
-            appearance="outline"
-          >
-            <mat-label>Max</mat-label>
-            <input
-              matInput
-              type="number"
-              [disabled]="!taskFull.delay.enabled"
-              [value]="taskFull.delay.maxDelay"
-            />
-            <mat-hint>In seconde</mat-hint>
-          </mat-form-field>
-        </div>
-      </div>
 
-      <div class="priority subpart">
-        <span class="subpart-tittle">Priority</span>
-        <mat-button-toggle-group
-          name="priority"
-          [value]="taskFull.priority"
-          aria-label="priority"
-        >
-          <mat-button-toggle [value]="priority.LOWEST"
-            >Lowest</mat-button-toggle
+      <form [formGroup]="coreSettingsForm" (submit)="submitForm()">
+        <div class="taskcron subpart">
+          <span class="subpart-tittle">Cron Schedule</span>
+          <mat-form-field appearance="outline">
+            <mat-label>Cron string</mat-label>
+            <input
+              matInput
+              [value]="taskFull.cron"
+              (input)="updateCronPreview($event); onFormChange()"
+              formControlName="cron"
+            />
+          </mat-form-field>
+          <span class="subpart-complement">{{cronString}}</span>
+        </div>
+        <div class="taskdelay subpart">
+          <span class="subpart-tittle">Execution Delay</span>
+          <div>
+            <mat-slide-toggle
+              class="right-spacer"
+              [checked]="taskFull.delay.enabled"
+              formControlName="delayEnabled"
+              (change)="onFormChange()"
+            ></mat-slide-toggle>
+            <mat-form-field
+              class="task-delay-input right-spacer"
+              appearance="outline"
+            >
+              <mat-label>Min</mat-label>
+              <input
+                matInput
+                type="number"
+                [value]="taskFull.delay.minDelay"
+                formControlName="delayMin"
+                (input)="onFormChange()"
+              />
+              <mat-hint>In seconde</mat-hint>
+            </mat-form-field>
+            <mat-form-field
+              class="task-delay-input right-spacer"
+              appearance="outline"
+            >
+              <mat-label>Max</mat-label>
+              <input
+                matInput
+                type="number"
+                [value]="taskFull.delay.maxDelay"
+                formControlName="delayMax"
+                (input)="onFormChange()"
+              />
+              <mat-hint>In seconde</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="priority subpart">
+          <span class="subpart-tittle">Priority</span>
+          <mat-button-toggle-group
+            name="priority"
+            [value]="taskFull.priority"
+            aria-label="priority"
+            formControlName="priority"
+            (change)="onFormChange()"
           >
-          <mat-button-toggle [value]="priority.LOW">Low</mat-button-toggle>
-          <mat-button-toggle [value]="priority.NORMAL"
-            >Normal</mat-button-toggle
-          >
-          <mat-button-toggle [value]="priority.HIGH">High</mat-button-toggle>
-          <mat-button-toggle [value]="priority.HIGHEST"
-            >Highest</mat-button-toggle
-          >
-        </mat-button-toggle-group>
-      </div>
+            <mat-button-toggle [value]="priority.LOWEST"
+              >Lowest</mat-button-toggle
+            >
+            <mat-button-toggle [value]="priority.LOW">Low</mat-button-toggle>
+            <mat-button-toggle [value]="priority.NORMAL"
+              >Normal</mat-button-toggle
+            >
+            <mat-button-toggle [value]="priority.HIGH">High</mat-button-toggle>
+            <mat-button-toggle [value]="priority.HIGHEST"
+              >Highest</mat-button-toggle
+            >
+          </mat-button-toggle-group>
+        </div>
+
+        <div class="panel submit-area">
+          <span *ngIf="!isFormValid">Error invalid settings</span>
+          <div>
+            <button class="button-cancel" mat-flat-button (click)="goToHome()">
+              Back
+            </button>
+            <button
+              [disabled]="buttonSaveDisabled"
+              [ngClass]="buttonSaveDisabled ? 'disabled' : null"
+              class="button-save"
+              type="submit"
+              mat-flat-button
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
     <div class="panel">
       <h2>Statistics</h2>
@@ -98,7 +126,11 @@
             [value]="taskFull.statistics.executionCount"
           />
         </mat-form-field>
-        <button class="reset-button" mat-flat-button (click)="null">
+        <button
+          class="reset-button"
+          mat-flat-button
+          (click)="resetStat(statsLabel.executionCount)"
+        >
           Reset
         </button>
       </div>
@@ -117,7 +149,11 @@
           />
           <span matSuffix>sec </span>
         </mat-form-field>
-        <button class="reset-button" mat-flat-button (click)="null">
+        <button
+          class="reset-button"
+          mat-flat-button
+          (click)="resetStat(statsLabel.averageExecutionTime)"
+        >
           Reset
         </button>
       </div>
@@ -134,7 +170,11 @@
             [value]="taskFull.statistics.lastExecution.toString()"
           />
         </mat-form-field>
-        <button class="reset-button" mat-flat-button (click)="null">
+        <button
+          class="reset-button"
+          mat-flat-button
+          (click)="resetStat(statsLabel.lastExecution)"
+        >
           Reset
         </button>
       </div>
@@ -143,32 +183,13 @@
       <h2>Custom Internal Variables</h2>
       <div class="subpart" *ngFor="let internVar of taskFull.internals">
         <span class="subpart-tittle">{{internVar.name}}</span>
-        <mat-form-field
-          class="task-internal-var-output right-spacer"
-          appearance="outline"
-        >
-          <input matInput disabled [value]="internVar.value" />
-        </mat-form-field>
-        <button class="set-button right-spacer" mat-flat-button (click)="null">
-          Edit
-        </button>
-        <button
-          class="reset-button right-spacer"
-          mat-flat-button
-          (click)="null"
-        >
-          Reset
-        </button>
-        <button class="reset-button" mat-flat-button (click)="null">
-          Delete
-        </button>
+        <app-input-extended
+          [internVar]="internVar"
+          (clickResetEvent)="resetInternVar($event)"
+          (clickDeleteEvent)="deleteInternVar($event)"
+          (clickSetEvent)="updateInternVar(internVar.name, $event)"
+        ></app-input-extended>
       </div>
-    </div>
-    <div class="panel submit-area">
-      <button class="button-cancel" mat-flat-button (click)="goToHome()">
-        Cancel
-      </button>
-      <button class="button-save" mat-flat-button (click)="null">Save</button>
     </div>
   </div>
 </div>
