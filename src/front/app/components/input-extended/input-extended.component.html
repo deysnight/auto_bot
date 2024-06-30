@@ -1,0 +1,37 @@
+<mat-form-field
+  class="task-internal-var-output right-spacer"
+  appearance="outline"
+>
+  <input
+    matInput
+    [disabled]="!isEditable"
+    [(value)]="internVarValue"
+    (input)="updateValue($event)"
+  />
+</mat-form-field>
+<button
+  *ngIf="!isEditable"
+  class="set-button right-spacer"
+  mat-flat-button
+  (click)="editInternVar()"
+>
+  Edit
+</button>
+<button
+  *ngIf="isEditable"
+  class="valid-button right-spacer"
+  mat-flat-button
+  (click)="setInternVar()"
+>
+  Set
+</button>
+<button
+  class="reset-button right-spacer"
+  mat-flat-button
+  (click)="resetInternVar()"
+>
+  Reset
+</button>
+<button class="reset-button" mat-flat-button (click)="deleteInternVar()">
+  Delete
+</button>

@@ -15,6 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { InputExtendedComponent } from './components/input-extended/input-extended.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { MatInputModule } from '@angular/material/input';
     GlobalTasksViewPage,
     TaskDataViewPage,
     TaskSummaryComponent,
+    InputExtendedComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +38,7 @@ import { MatInputModule } from '@angular/material/input';
     MatButtonToggleModule,
     MatFormFieldModule,
     MatInputModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
