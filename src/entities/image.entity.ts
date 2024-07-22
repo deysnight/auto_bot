@@ -2,7 +2,7 @@ import cv, { Mat } from '@u4/opencv4nodejs';
 import { ISize } from './ientities/icv.entity';
 import IImage from './ientities/iimage.entity';
 import { PNG } from 'pngjs';
-import Match from './match.entity';
+import Match from './match.entity.js';
 
 class Image implements IImage {
   size: ISize;
