@@ -5,10 +5,14 @@ import AdblockerPlugin from 'puppeteer-extra-plugin-adblocker';
 import envConfig from '../config/env.config.js';
 import path from 'path';
 import { eSignal, eSignalExit } from '../entities/global.enum.js';
-import Image from '../entities/image.entity.js';
-import cv from '@u4/opencv4nodejs';
+
 class sBrowser {
   defaultUserDataDir: string = path.join(path.resolve(), 'puppeteer_autobot');
+  pathToExtension: string = path.join(
+    path.resolve(),
+    'browserExtensions',
+    'Buster_Captcha_Solver'
+  );
   browser?: Browser;
   page?: Page;
 
@@ -24,7 +28,13 @@ class sBrowser {
         height: envConfig.browser.height,
         deviceScaleFactor: envConfig.browser.deviceScaleFactor,
       },
-      args: ['--no-sandbox'],
+      args: [
+        '--no-sandbox',
+        `--disable-extensions-except=${this.pathToExtension}`,
+        `--load-extension=${this.pathToExtension}`,
+      ],
+      ignoreDefaultArgs: ['--disable-background-networking'],
+
       userDataDir: envConfig.browser.userDataDir ?? this.defaultUserDataDir,
       headless: envConfig.browser.headless,
     });
