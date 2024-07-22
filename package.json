@@ -5,6 +5,7 @@
     "ng": "ng",
     "ng:start": "ng serve",
     "ng:build": "ng build",
+    "build-opencv": "npx opencv-build-npm && npx build-opencv --version 4.6.0 rebuild",
     "start:back:dev": "cross-env NODE_ENV=development npx nodemon",
     "build": "rimraf ./build && ng build && tsc",
     "start:dev": "cross-env NODE_ENV=development npm run build && node build/src/index.js",
