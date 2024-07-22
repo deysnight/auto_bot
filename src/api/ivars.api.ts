@@ -1,5 +1,5 @@
-import { eStatsLabel } from '../entities/global.enum';
-import Store from '../services/storage.service';
+import { eStatsLabel } from '../entities/global.enum.js';
+import Store from '../services/storage.service.js';
 
 abstract class IVars {
   /**
