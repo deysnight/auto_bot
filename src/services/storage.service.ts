@@ -38,6 +38,10 @@ class Store {
     return Store.instance;
   }
 
+  getRunningTask(): string {
+    return this.refScheduler.getCurrentTask().id;
+  }
+
   setRefScheduler(ref: Scheduler) {
     this.refScheduler = ref;
   }
