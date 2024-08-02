@@ -49,14 +49,30 @@ class GlobalData implements IGlobalData {
   }
 
   updateGlobalTaskId(): void {
+    let tmpTask: string[] = [];
     Tasks.forEach((_task) => {
       const name = (_task as any).taskName;
       const id = simpleHash(name);
+      tmpTask.push(id);
       const exist = this.taskIdList.find((item) => item.id === id);
       if (exist === undefined) {
-        this.taskIdList.push({ id, name });
+        this.taskIdList.push({ id, name, registered: true });
       }
     });
+    this.taskIdList.forEach((task) => {
+      if (!tmpTask.includes(task.id)) {
+        task.registered = false;
+      }
+    });
+  }
+
+  isTaskRegistered(id: string): boolean {
+    const result = this.taskIdList.find((task) => task.id === id);
+    return !!result;
+  }
+
+  getRegisteredTasks(): ITaskId[] {
+    return this.taskIdList.filter((task) => task.registered === true);
   }
 }
 

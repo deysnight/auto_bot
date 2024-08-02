@@ -6,6 +6,7 @@ import envConfig from '../config/env.config.js';
 import ITask from '../entities/ientities/itask.entity.js';
 import { eStatsLabel } from '../entities/global.enum.js';
 import WSS from './socket.service.js';
+import randomIntFromInterval from '../utils/randomInt.js';
 
 class Scheduler {
   taskQueue: ITaskQueueItem[] = [];

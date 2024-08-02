@@ -63,7 +63,12 @@ class Store {
   }
 
   getEnabledTask(): TaskConfigData[] {
-    return this.tasksData.getEnabledTask();
+    const registeredTasks = this.globalData.getRegisteredTasks();
+    return this.tasksData
+      .getEnabledTask()
+      .filter(
+        (eTask) => !!registeredTasks.find((rTask) => rTask.id === eTask.id)
+      );
   }
 
   setTaskEnabled(id: string, newState: boolean): void {
