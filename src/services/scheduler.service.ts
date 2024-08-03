@@ -7,12 +7,17 @@ import ITask from '../entities/ientities/itask.entity.js';
 import { eStatsLabel } from '../entities/global.enum.js';
 import WSS from './socket.service.js';
 import randomIntFromInterval from '../utils/randomInt.js';
+import {
+  cTimeout,
+  setAsyncInterval,
+  clearAsyncInterval,
+} from './asyncInterval.service.js';
 
 class Scheduler {
   taskQueue: ITaskQueueItem[] = [];
   currentTaskInstance?: ITask;
   mainState: eMainState = eMainState.NONE;
-  stateMachineHandle?: NodeJS.Timeout;
+  stateMachineHandle?: cTimeout;
   currenttasktargetedDelay?: number;
   currenttaskcurrentDelay?: number;
   startExecutionTime: Date = new Date(0);
@@ -122,9 +127,9 @@ class Scheduler {
     }
     this.changeState(eMainState.IDLE);
 
-    this.stateMachineHandle = setInterval(async () => {
+    this.stateMachineHandle = setAsyncInterval(async () => {
       await this.stateMachine();
-    }, 1000);
+    }, 2500);
     console.log('[Scheduler] State machine started');
   }
 
@@ -132,7 +137,7 @@ class Scheduler {
     if (this.mainState === eMainState.NONE) {
       return;
     }
-    clearInterval(this.stateMachineHandle);
+    clearAsyncInterval(this.stateMachineHandle as cTimeout);
     this.changeState(eMainState.NONE);
     console.log('[Scheduler] State machine stopped');
   }
